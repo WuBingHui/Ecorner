@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Ecorner</string>
+
+
+    <!--LoginActivity-->
+    <string name="account">"帳號"</string>
+    <string name="password">"密碼"</string>
+    <string name="login">"登入"</string>
+    <string name="registered">"註冊"</string>
+
+</resources>

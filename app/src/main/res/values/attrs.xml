@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <declare-styleable name="CustomEditTextView">
+        <attr name="inputType"/>
+        <attr name="title"/>
+        <attr name="hint"/>
+        <attr name="icon"/>
+    </declare-styleable>
+
+
+
+</resources>
