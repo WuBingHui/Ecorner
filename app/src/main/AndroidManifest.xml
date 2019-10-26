@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.anthony.ecorner.LoginActivity">
+        <activity android:name=".main.registered.RegisteredActivity"></activity>
+        <activity android:name=".main.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

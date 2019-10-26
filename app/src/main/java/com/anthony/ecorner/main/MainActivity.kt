@@ -1,7 +1,8 @@
-package com.anthony.ecorner
+package com.anthony.ecorner.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.anthony.ecorner.R
 
 class MainActivity : AppCompatActivity() {
 

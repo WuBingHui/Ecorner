@@ -1,22 +1,19 @@
-package com.anthony.ecorner
+package com.anthony.ecorner.main.login
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+
+import android.content.Intent
 import android.os.Bundle
-import android.view.WindowManager
-import androidx.core.content.ContextCompat
+import com.anthony.ecorner.R
+import com.anthony.ecorner.main.base.BaseActivity
+import com.anthony.ecorner.main.registered.RegisteredActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.winterNevaLight)
-        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
 
         initView()
 
@@ -27,6 +24,12 @@ class LoginActivity : AppCompatActivity() {
     private fun initView() {
 
         passwordEditText.setPasswordMode()
+
+        registeredBtn.setOnClickListener {
+            val intent = Intent()
+            intent.setClass(this,RegisteredActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

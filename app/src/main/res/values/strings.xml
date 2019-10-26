@@ -6,6 +6,12 @@
     <string name="account">"帳號"</string>
     <string name="password">"密碼"</string>
     <string name="login">"登入"</string>
+    <!--RegisteredActivity-->
     <string name="registered">"註冊"</string>
+    <string name="name">"姓名"</string>
+    <string name="confirm_password">"確認密碼"</string>
+    <string name="phone">"手機號碼"</string>
+    <string name="address">"地址"</string>
+    <string name="confirm">"確認"</string>
 
 </resources>
