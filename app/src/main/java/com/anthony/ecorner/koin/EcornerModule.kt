@@ -77,7 +77,6 @@ class RedirectInterceptor : Interceptor {
 
         val request = chain.request()
         var response = createResponse(chain, request)
-
         when (response.code) {
         in 400..900 -> {
             throw IOException(response.toString())
