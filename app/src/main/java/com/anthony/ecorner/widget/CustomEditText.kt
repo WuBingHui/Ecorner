@@ -65,6 +65,16 @@ class CustomEditText constructor(context: Context, attrs: AttributeSet?) :
         return this
     }
 
+    fun setEmailMode(): CustomEditText {
+        title.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        return this
+    }
+
+    fun setPhoneMode(): CustomEditText {
+        title.inputType = InputType.TYPE_CLASS_PHONE
+        return this
+    }
+
     fun apply() {
 
         icon.background = iconImage
