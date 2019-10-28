@@ -29,6 +29,13 @@ fun String.isChinese(): Boolean {
     return this.matches("[\\u4E00-\\u9FA5]+".toRegex())
 }
 
+/**
+ * 是否為台灣手機
+ */
+fun String.isTaiwanPhone():Boolean{
+    return  Pattern.compile("(09)+[0-9]{8}").matcher(this).matches()
+}
+
 
 
 

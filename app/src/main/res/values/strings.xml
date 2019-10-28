@@ -17,5 +17,12 @@
     <string name="phone">"手機號碼"</string>
     <string name="address">"地址"</string>
     <string name="confirm">"確認"</string>
+    <string name="registered_success">"註冊成功"</string>
+    <string name="name_empty">"姓名不得空白"</string>
+    <string name="password_not_same">"密碼與確認密碼不一致"</string>
+    <string name="phone_empty">"手機不得空白"</string>
+    <string name="phone_format_error">"手機格式有誤"</string>
+    <string name="address_empty">"地址不得空白"</string>
+    <string name="confirm_password_empty">"確認密碼不得為空白"</string>
 
 </resources>

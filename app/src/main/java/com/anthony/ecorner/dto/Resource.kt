@@ -2,7 +2,7 @@ package com.anthony.ecorner.dto
 
 enum class Status(val value : Boolean) {
     SUCCESS(true),
-    Failed(false)
+    FAILED(false)
 }
 
 
@@ -13,7 +13,7 @@ data class Resource<out T>(val status: Status, val data: T?, val message: String
         }
 
         fun <T> error(msg: String?, data: T?): Resource<T> {
-            return Resource(Status.Failed, data, msg)
+            return Resource(Status.FAILED, data, msg)
         }
     }
 }

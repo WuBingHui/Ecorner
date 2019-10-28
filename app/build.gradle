@@ -8,6 +8,12 @@ apply plugin: 'kotlin-kapt'
 
 
 android {
+
+    dataBinding {
+        enabled = true
+    }
+
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
@@ -38,6 +44,7 @@ android {
     }
 }
 
+
 dependencies {
 
 
@@ -46,6 +53,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.1.0'
     kapt "com.android.databinding:compiler:$kotlin_version"
+
 
     //koin
     implementation 'org.koin:koin-android:2.0.0-GA'
@@ -90,4 +98,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+kapt {
+    generateStubs = true
 }

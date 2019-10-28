@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.anthony.ecorner.dto.login.LoginDto
 import com.anthony.ecorner.dto.Resource
 import com.anthony.ecorner.main.base.BaseViewModel
-import com.anthony.ecorner.model.LoginModel
+import com.anthony.ecorner.model.login.LoginModel
 import com.csnt.android_sport.extension.addTo
 import com.csnt.android_sport.extension.ioToUi
 
@@ -13,7 +13,7 @@ class LoginViewModel(
 ) : BaseViewModel() {
 
     enum class Result(val value:Boolean){
-        Success(true),Failed(false)
+        Success(true),FAILED(false)
     }
 
     val onLogin: MutableLiveData<Resource<LoginDto>> by lazy { MutableLiveData<Resource<LoginDto>>() }

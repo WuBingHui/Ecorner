@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_gradient_bg"
-    tools:context=".main.login.LoginActivity">
+    tools:context=".main.login.view.LoginActivity">
 
     <TextView
         android:id="@+id/appNameLabel"

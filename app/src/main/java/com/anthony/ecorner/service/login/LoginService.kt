@@ -1,4 +1,4 @@
-package com.anthony.ecorner.service
+package com.anthony.ecorner.service.login
 
 import com.anthony.ecorner.dto.login.LoginDto
 import io.reactivex.Single
