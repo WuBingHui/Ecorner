@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.dto.login.request.LoginBo
 import com.anthony.ecorner.extension.isEmailFormat
 import com.anthony.ecorner.koin.Properties
 import com.anthony.ecorner.main.base.BaseActivity
@@ -36,7 +37,7 @@ class LoginActivity : BaseActivity() {
 
         loginBtn.setOnClickListener {
             if (checkAccountEmpty() && checkAccountFormat() && checkPasswordEmpty()) {
-                viewModel.postLogin(accountEditText.getText(), passwordEditText.getText())
+                viewModel.postLogin(LoginBo(accountEditText.getText(),passwordEditText.getText()))
             }
         }
 

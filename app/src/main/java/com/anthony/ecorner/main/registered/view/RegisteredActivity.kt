@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.anthony.ecorner.R
 import com.anthony.ecorner.databinding.ActivityRegisteredBinding
 import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.dto.registered.request.RegisteredBo
 import com.anthony.ecorner.extension.isEmailFormat
 import com.anthony.ecorner.extension.isTaiwanPhone
 import com.anthony.ecorner.main.base.BaseActivity
@@ -69,7 +70,7 @@ class RegisteredActivity : BaseActivity() {
             checkPhoneFormat() &&
             checkAddress()
         ) {
-            viewModel.postRegistered(accountEditText.getText(),passwordEditText.getText(),nameEditText.getText(),phoneEditText.getText(),addressEditText.getText())
+            viewModel.postRegistered(RegisteredBo(accountEditText.getText(),passwordEditText.getText(),nameEditText.getText(),phoneEditText.getText(),addressEditText.getText()))
 
         }
     }

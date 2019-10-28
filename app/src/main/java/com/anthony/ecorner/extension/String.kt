@@ -1,9 +1,5 @@
 package com.anthony.ecorner.extension
 
-import android.content.Context
-import android.text.Editable
-import java.math.BigDecimal
-import java.text.DecimalFormat
 import java.util.regex.Pattern
 
 //正則: 字母.數字 為必須

@@ -1,4 +1,4 @@
-package com.anthony.ecorner.dto.registered
+package com.anthony.ecorner.dto.registered.response
 
 data class RegisteredDto(
     val error: String,

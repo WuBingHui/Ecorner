@@ -1,4 +1,4 @@
-package com.anthony.ecorner.dto.login
+package com.anthony.ecorner.dto.login.response
 
 data class LoginDto(
     val error:String,
