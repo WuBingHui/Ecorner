@@ -23,12 +23,14 @@ android {
     }
 
     defaultConfig {
+
         applicationId "com.anthony.ecorner"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         debug {
@@ -52,6 +54,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.android.databinding:compiler:$kotlin_version"
 
 
@@ -90,6 +93,10 @@ dependencies {
     //gson
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    //viewPager2
+    implementation 'com.google.android.material:material:1.2.0-alpha01'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-rc01'
+
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -98,6 +105,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.android.material:material:1.0.0'
 }
 kapt {
     generateStubs = true

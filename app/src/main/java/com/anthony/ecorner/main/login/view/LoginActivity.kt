@@ -10,6 +10,7 @@ import com.anthony.ecorner.dto.Status
 import com.anthony.ecorner.dto.login.request.LoginBo
 import com.anthony.ecorner.extension.isEmailFormat
 import com.anthony.ecorner.koin.Properties
+import com.anthony.ecorner.main.main.view.MainActivity
 import com.anthony.ecorner.main.base.BaseActivity
 import com.anthony.ecorner.main.login.viewModel.LoginViewModel
 import com.anthony.ecorner.main.registered.view.RegisteredActivity
@@ -81,6 +82,10 @@ class LoginActivity : BaseActivity() {
                     Properties.setToken(dto.data?.user!!.id)
                     Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT)
                         .show()
+                    val intent = Intent()
+                    intent.setClass(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 Status.FAILED -> {
                     Toast.makeText(this, dto.data?.error, Toast.LENGTH_SHORT).show()

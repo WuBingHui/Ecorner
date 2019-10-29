@@ -18,7 +18,7 @@ class CustomEditText constructor(context: Context, attrs: AttributeSet?) :
 
     private var titleText: String? = ""
     private var iconImage: Drawable? =
-        ContextCompat.getDrawable(context, R.mipmap.outline_person_outline_white_18)
+        ContextCompat.getDrawable(context, R.mipmap.outline_person_outline_white_24)
     private var hint: String? = "Default"
 
     init {

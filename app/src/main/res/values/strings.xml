@@ -25,4 +25,18 @@
     <string name="address_empty">"地址不得空白"</string>
     <string name="confirm_password_empty">"確認密碼不得為空白"</string>
 
+    <!--MainActivity-->
+    <string name="exit_app">再按一次返回键退出APP</string>
+
+
+    <!--Menu-->
+    <string name="home">"首頁"</string>
+    <string name="update">"上傳"</string>
+    <string name="message">"訊息"</string>
+    <string name="personal">"個人"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>

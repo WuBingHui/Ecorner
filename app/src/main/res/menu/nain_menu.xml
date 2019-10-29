@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:checked="true"
+        android:icon="@mipmap/baseline_home_white_24"
+        android:title="@string/home"
+        />
+
+    <item
+        android:id="@+id/update"
+        android:icon="@mipmap/baseline_add_box_white_24"
+        android:title="@string/update"/>
+
+    <item
+        android:id="@+id/message"
+        android:icon="@mipmap/baseline_email_white_24"
+        android:title="@string/message"/>
+
+    <item
+        android:id="@+id/personal"
+        android:icon="@mipmap/baseline_person_white_24"
+        android:title="@string/personal"/>
+
+</menu>
