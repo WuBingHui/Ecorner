@@ -35,6 +35,12 @@
     <string name="message">"訊息"</string>
     <string name="personal">"個人"</string>
 
+
+    <!--HomeFragment-->
+    <string name="search">"搜尋"</string>
+    <string name="collection">"收藏"</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
