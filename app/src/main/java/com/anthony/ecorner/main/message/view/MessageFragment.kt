@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.core.content.ContextCompat
 import com.anthony.ecorner.R
+import com.anthony.ecorner.main.message.view.adapter.BannerAdapter
+import kotlinx.android.synthetic.main.fragment_message.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -18,9 +21,11 @@ class MessageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_message, container, false)
     }
+
+
 
 
 }
