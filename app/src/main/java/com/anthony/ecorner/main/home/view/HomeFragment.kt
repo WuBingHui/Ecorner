@@ -41,7 +41,6 @@ class HomeFragment : Fragment() {
         return view
     }
 
-
     private fun initView(view: View) {
 
         val childLabel =

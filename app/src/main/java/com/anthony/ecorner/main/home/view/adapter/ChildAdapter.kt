@@ -14,6 +14,8 @@ class ChildAdapter(private var context: Context) : RecyclerView.Adapter<ChildAda
 
     private var data = mutableListOf<Drawable?>()
 
+
+
     fun setDatas(data: MutableList<Drawable?>) {
         this.data = data
         notifyDataSetChanged()
