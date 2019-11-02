@@ -36,8 +36,8 @@ class UpdateFragment : Fragment() {
                 ContextCompat.getDrawable(it, R.drawable.banner_3)
             )
             val bannerAdapter = BannerAdapter(it)
-            banner?.adapter = bannerAdapter
-            bannerAdapter.setImages(imgList)
+//            banner?.adapter = bannerAdapter
+//            bannerAdapter.setImages(imgList)
         }
     }
 

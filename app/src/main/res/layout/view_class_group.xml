@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/groupContraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/classLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/toddler"
+        android:drawableLeft="@drawable/toddler"
+        android:gravity="start|center"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:text="幼童"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/moreLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/moreLabel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="end|center"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:text="@string/more"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/classLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/classLabel"
+        app:layout_constraintTop_toTopOf="@+id/classLabel" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/classRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/classLabel" />
+</androidx.constraintlayout.widget.ConstraintLayout>
