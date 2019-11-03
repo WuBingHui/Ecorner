@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 
 import com.anthony.ecorner.R
-import com.anthony.ecorner.main.message.view.adapter.BannerAdapter
 
 /**
  * A simple [Fragment] subclass.
@@ -35,7 +34,7 @@ class UpdateFragment : Fragment() {
                 ContextCompat.getDrawable(it, R.drawable.banner_2),
                 ContextCompat.getDrawable(it, R.drawable.banner_3)
             )
-            val bannerAdapter = BannerAdapter(it)
+//            val bannerAdapter = BannerAdapter(it)
 //            banner?.adapter = bannerAdapter
 //            bannerAdapter.setImages(imgList)
         }
