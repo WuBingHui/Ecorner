@@ -1,26 +1,408 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
 
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
     tools:context=".main.message.view.MessageFragment">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/updateActionBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_gradient_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="center|start"
+            android:text="@string/update"
+            android:textColor="@color/md_white_1000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/update"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pictureLeftCardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/pictureMidCardView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateActionBar">
+
+        <ImageView
+            android:id="@+id/leftImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/add_pic"
+            android:contentDescription="@string/app_name" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pictureMidCardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/pictureRightCardView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/pictureLeftCardView"
+        app:layout_constraintTop_toTopOf="@+id/pictureLeftCardView">
+
+        <ImageView
+            android:id="@+id/midImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/add_pic"
+            android:contentDescription="@string/app_name" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pictureRightCardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pictureMidCardView"
+        app:layout_constraintTop_toTopOf="@+id/pictureMidCardView">
+
+        <ImageView
+            android:id="@+id/rightImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/add_pic"
+            android:contentDescription="@string/app_name" />
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:clipChildren="false"
+        android:background="@drawable/shape_gradient_bg"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/updateActionBar" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.3" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:background="@color/winterNevaDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/commodityNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="32dp"
+        android:drawableStart="@drawable/point"
+        android:drawableLeft="@drawable/point"
+        android:drawablePadding="8dp"
+        android:gravity="start|center"
+        android:text="@string/commodity_name"
+        android:textColor="@color/winterNevaDark"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/commodityTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="40dp"
+        android:drawableStart="@drawable/point"
+        android:drawableLeft="@drawable/point"
+        android:drawablePadding="8dp"
+        android:gravity="start|center"
+        android:text="@string/commodity_type"
+        android:textColor="@color/winterNevaDark"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commodityNameLabel" />
+
+    <TextView
+        android:id="@+id/commodityDepositLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="40dp"
+        android:drawableStart="@drawable/point"
+        android:drawableLeft="@drawable/point"
+        android:drawablePadding="8dp"
+        android:gravity="start|center"
+        android:text="@string/commodity_rent"
+        android:textColor="@color/winterNevaDark"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commodityTypeLabel" />
+
+    <TextView
+        android:id="@+id/commodityRentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="32dp"
+        android:drawableStart="@drawable/point"
+        android:drawableLeft="@drawable/point"
+        android:drawablePadding="8dp"
+        android:gravity="start|center"
+        android:text="@string/commodity_deposit"
+        android:textColor="@color/winterNevaDark"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commodityDepositLabel" />
+
+    <TextView
+        android:id="@+id/commodityDescritpionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="40dp"
+        android:drawableStart="@drawable/point"
+        android:drawableLeft="@drawable/point"
+        android:drawablePadding="8dp"
+        android:gravity="start|center"
+        android:text="@string/commodity_description"
+        android:textColor="@color/winterNevaDark"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commodityAddressLabel" />
+
+    <TextView
+        android:id="@+id/commodityAddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="40dp"
+        android:drawableStart="@drawable/point"
+        android:drawableLeft="@drawable/point"
+        android:drawablePadding="8dp"
+        android:gravity="start|center"
+        android:text="@string/commodity_address"
+        android:textColor="@color/winterNevaDark"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commodityRentLabel" />
+
+    <EditText
+        android:id="@+id/commodityNameEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:gravity="center"
+        android:background="@drawable/shape_oval_grey_dark_bg"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:text="藍寶石堅尼"
+        android:textColor="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/commodityNameLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/commodityNameLabel"
+        app:layout_constraintTop_toTopOf="@+id/commodityNameLabel" />
+
+    <EditText
+        android:id="@+id/commodityRentEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/shape_oval_grey_dark_bg"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="number"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:text="100"
+        android:textColor="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/commodityDepositLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/commodityDepositLabel"
+        app:layout_constraintTop_toTopOf="@+id/commodityDepositLabel" />
+
+    <EditText
+        android:id="@+id/commodityDepositEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/shape_oval_grey_dark_bg"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="number"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:text="20"
+        android:textColor="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/commodityRentLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/commodityRentLabel"
+        app:layout_constraintTop_toTopOf="@+id/commodityRentLabel" />
+
+    <EditText
+        android:id="@+id/commodityAddressEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/shape_oval_grey_dark_bg"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:text="台灣"
+        android:textColor="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/commodityAddressLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/commodityAddressLabel"
+        app:layout_constraintTop_toTopOf="@+id/commodityAddressLabel" />
+
+    <EditText
+        android:id="@+id/commodityDescriptionEditText"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/shape_oval_grey_dark_bg"
+        android:ems="10"
+        android:gravity="start"
+        android:inputType="textMultiLine"
+        android:padding="8dp"
+        android:scrollbars="vertical"
+        android:singleLine="false"
+        android:text="鉅細靡遺的道出商品的每一個細節，提供一個完整的內容，也可加上圖片詳細說明及分析有關商品的資訊。這種類型較常出現在一些專業性的商品或電器類產品。"
+        android:textColor="@android:color/background_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/commodityDescritpionLabel"
+        app:layout_constraintTop_toTopOf="@+id/commodityDescritpionLabel" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/shape_oval_grey_dark_bg"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/commodityTypeLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/commodityTypeLabel"
+        app:layout_constraintTop_toTopOf="@+id/commodityTypeLabel"
+        app:layout_constraintVertical_bias="0.489">
+
+        <RadioButton
+            android:id="@+id/childRadioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/child"
+            app:layout_constraintEnd_toStartOf="@+id/travelRadioButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioButton
+            android:id="@+id/travelRadioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/travel"
+            app:layout_constraintEnd_toStartOf="@+id/hospitalRadioButton"
+            app:layout_constraintStart_toEndOf="@+id/childRadioButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioButton
+            android:id="@+id/hospitalRadioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hospital"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/travelRadioButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioButton
+            android:id="@+id/elerictRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/electric"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gameRadioButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/childRadioButton" />
+
+        <RadioButton
+            android:id="@+id/gameRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/elerictRadioButton"
+            app:layout_constraintTop_toBottomOf="@+id/travelRadioButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

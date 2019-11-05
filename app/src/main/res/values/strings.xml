@@ -55,6 +55,17 @@
     <string name="about">"關於"</string>
     <string name="logout">"登出"</string>
 
+    <!--UpdateFragment-->
+    <string name="commodity_name">"商品名稱："</string>
+    <string name="commodity_type">"商品分類："</string>
+    <string name="commodity_rent">"商品租金："</string>
+    <string name="commodity_deposit">"商品押金："</string>
+    <string name="commodity_description">"商品描述："</string>
+    <string name="commodity_address">"租借地址："</string>
+
+
+
+
 
 
 

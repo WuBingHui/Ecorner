@@ -9,6 +9,7 @@
     <color name="winterNevaLight">#76B1F8</color>
     <color name="winterNevaDark">#4893F1</color>
     <color name="md_grey_alpha">#4DFFFFFF</color>
+    <color name="md_grey_dark_alpha">#1A616161</color>
 
 
     <!-- google's material design colours from
