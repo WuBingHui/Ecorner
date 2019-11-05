@@ -1,10 +1,12 @@
 package com.anthony.ecorner.main.main.adapter
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager){
+class ViewPagerFragmentStateAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity){
 
 
     var fragmentList = ArrayList<Fragment>()
@@ -17,12 +19,14 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager) : Fragment
         notifyDataSetChanged()
     }
 
-    override fun getItem(position: Int): Fragment {
-        return fragmentList[position]
+    override fun getItemCount(): Int {
+
+        return fragmentList.size
     }
 
-    override fun getCount(): Int {
-        return fragmentList.size
+    override fun createFragment(position: Int): Fragment {
+        return fragmentList[position]
+
     }
 
 }

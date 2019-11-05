@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.anthony.ecorner.R
 import com.anthony.ecorner.main.base.BaseActivity
 import com.anthony.ecorner.main.home.view.HomeFragment
@@ -44,13 +45,13 @@ class MainActivity : BaseActivity() {
 
     private fun initViewPager(fragmentList: ArrayList<Fragment>) {
 
-        val viewPagerFragmentStateAdapter = ViewPagerFragmentStateAdapter(supportFragmentManager)
+        val viewPagerFragmentStateAdapter = ViewPagerFragmentStateAdapter(this)
 
         viewPager.adapter = viewPagerFragmentStateAdapter
 
         viewPagerFragmentStateAdapter.setFragments(fragmentList)
 
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
 
             }

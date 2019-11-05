@@ -7,13 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
-
 import com.anthony.ecorner.R
 import android.content.Intent
 import android.graphics.BitmapFactory
 import kotlinx.android.synthetic.main.fragment_update.*
 import java.io.FileNotFoundException
+import android.graphics.drawable.BitmapDrawable
+
+
 
 
 /**
@@ -84,11 +85,12 @@ class UpdateFragment : Fragment() {
                 try {
                     uri?.let {
                         val bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri))
+                        val drawable = BitmapDrawable(bitmap)
                         /* 將Bitmap設定到ImageView */
                         when (requestCode) {
-                            LEFT_IMAGE -> leftImageView.setImageBitmap(bitmap)
-                            MID_IMAGE -> midImageView.setImageBitmap(bitmap)
-                            RIGHT_IMAGE -> rightImageView.setImageBitmap(bitmap)
+                            LEFT_IMAGE -> leftImageView.background = drawable
+                            MID_IMAGE -> midImageView.background = drawable
+                            RIGHT_IMAGE -> rightImageView.background = drawable
                         }
                     }
                 } catch (e: FileNotFoundException) {
