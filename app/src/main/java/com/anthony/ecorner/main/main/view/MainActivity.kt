@@ -17,6 +17,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
     private var exitTime: Long = 0
+
+    companion object{
+        val activity = this
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,6 +29,7 @@ class MainActivity : BaseActivity() {
         initView()
 
         initBottomNavigationView()
+
 
     }
 
@@ -104,6 +110,7 @@ class MainActivity : BaseActivity() {
             moveTaskToBack(true)
         }
     }
+
 
 }
 

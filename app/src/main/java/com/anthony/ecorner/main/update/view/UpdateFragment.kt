@@ -13,14 +13,15 @@ import android.graphics.BitmapFactory
 import kotlinx.android.synthetic.main.fragment_update.*
 import java.io.FileNotFoundException
 import android.graphics.drawable.BitmapDrawable
-
-
+import android.view.MotionEvent
+import android.widget.EditText
+import com.csnt.android_sport.main.base.BaseFragment
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class UpdateFragment : Fragment() {
+class UpdateFragment : BaseFragment() ,View.OnTouchListener{
 
 
     companion object {
@@ -46,6 +47,8 @@ class UpdateFragment : Fragment() {
     }
 
     private fun initView() {
+
+        commodityDescriptionEditText.setOnTouchListener(this)
 
         leftImageView.setOnClickListener {
             setImage(0)
@@ -100,4 +103,35 @@ class UpdateFragment : Fragment() {
     }
 
 
+  override  fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
+        //觸摸的是EditText並且當前EditText可以滾動則將事件交給EditText處理；否則將事件交由其父類處理
+        if (view.id == R.id.commodityDescriptionEditText && canVerticalScroll(commodityDescriptionEditText)) {
+            view.parent.requestDisallowInterceptTouchEvent(true)
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                view.parent.requestDisallowInterceptTouchEvent(false)
+            }
+        }
+        return false
+    }
+    /**
+     * EditText豎直方向是否可以滾動
+     * @param editText 需要判斷的EditText
+     * @return true：可以滾動  false：不可以滾動
+     */
+    private fun canVerticalScroll(editText: EditText): Boolean {
+        //滾動的距離
+        val scrollY = editText.scrollY
+        //控件內容的總高度
+        val scrollRange = editText.layout.height
+        //控件實際顯示的高度
+        val scrollExtent =
+            editText.height - editText.compoundPaddingTop - editText.compoundPaddingBottom
+        //控件內容總高度與實際顯示高度的差值
+        val scrollDifference = scrollRange - scrollExtent
+
+        return if (scrollDifference == 0) {
+            false
+        } else scrollY > 0 || scrollY < scrollDifference - 1
+
+    }
 }

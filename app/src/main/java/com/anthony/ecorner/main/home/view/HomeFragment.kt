@@ -1,6 +1,7 @@
 package com.anthony.ecorner.main.home.view
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,28 +9,44 @@ import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.anthony.ecorner.R
+import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.koin.Properties
 import com.anthony.ecorner.main.home.view.adapter.*
+import com.anthony.ecorner.main.home.view.viewModel.HomeViewModel
+import com.anthony.ecorner.main.main.view.MainActivity
+import com.csnt.android_sport.main.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_class_group.*
 import kotlinx.android.synthetic.main.view_class_group.view.*
 import kotlinx.android.synthetic.main.view_class_item.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
 
+    private val viewModel by  viewModel<HomeViewModel>()
     private lateinit var childRecyclerView: RecyclerView
     private lateinit var travelRecyclerView: RecyclerView
     private lateinit var hospitalRecyclerView: RecyclerView
     private lateinit var electricRecyclerView: RecyclerView
     private lateinit var gameRecyclerView: RecyclerView
+
+    private lateinit var  childAdapter:ChildAdapter
+    private lateinit var  travelAdapter : TravelAdapter
+    private lateinit var  hospitalAdapter : HospitalAdapter
+    private lateinit var  electricAdapter : ElectricAdapter
+    private lateinit var  gameAdapter : GameAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +55,7 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         initView(view)
         initRecyclerView()
+        initViewModel()
         return view
     }
 
@@ -127,11 +145,11 @@ class HomeFragment : Fragment() {
             electricLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
             gameLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
-            val childAdapter = ChildAdapter(it)
-            val travelAdapter = TravelAdapter(it)
-            val hospitalAdapter = HospitalAdapter(it)
-            val electricAdapter = ElectricAdapter(it)
-            val gameAdapter = GameAdapter(it)
+             childAdapter = ChildAdapter(it)
+             travelAdapter = TravelAdapter(it)
+             hospitalAdapter = HospitalAdapter(it)
+             electricAdapter = ElectricAdapter(it)
+             gameAdapter = GameAdapter(it)
 
             childRecyclerView.layoutManager = childLinearLayoutManager
             travelRecyclerView.layoutManager = travelLinearLayoutManager
@@ -144,7 +162,32 @@ class HomeFragment : Fragment() {
             hospitalRecyclerView.adapter = hospitalAdapter
             electricRecyclerView .adapter = electricAdapter
             gameRecyclerView .adapter = gameAdapter
+
+            viewModel.getCommodity()
         }
     }
 
+
+    private fun initViewModel(){
+        viewModel.onCommodity.observe(this, Observer {  dto->
+            context?.let { context ->
+                when (dto.status) {
+                    Status.SUCCESS -> {
+                        dto.data?.let {
+                            childAdapter.setData(it.child)
+                            travelAdapter.setData(it.travel)
+                            hospitalAdapter.setData(it.hospital)
+                            electricAdapter.setData(it.electric)
+                            gameAdapter.setData(it.game)
+                        }
+                    }
+                    Status.FAILED -> {
+                        Toast.makeText(context, dto.data?.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+
+
+    }
 }

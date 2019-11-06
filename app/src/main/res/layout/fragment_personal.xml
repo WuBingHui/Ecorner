@@ -31,6 +31,7 @@
         android:layout_marginTop="32dp"
         app:cardElevation="5dp"
         app:cardMaxElevation="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/nameLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/arcImg">
@@ -47,11 +48,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center"
         android:text="Anthony"
         android:textColor="@color/md_white_1000"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="@+id/cardView2"
         app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/cardView2" />
@@ -141,4 +144,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
 </androidx.constraintlayout.widget.ConstraintLayout>

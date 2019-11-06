@@ -9,12 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
+import com.anthony.ecorner.dto.home.reponse.Hospital
 
 class HospitalAdapter(private var context: Context) : RecyclerView.Adapter<HospitalAdapter.CardViewHolder>() {
 
-    private var data = mutableListOf<Drawable?>()
+    private var data = listOf<Hospital>()
 
-    fun setDatas(data: MutableList<Drawable?>) {
+    fun setData(data: List<Hospital>) {
         this.data = data
         notifyDataSetChanged()
     }

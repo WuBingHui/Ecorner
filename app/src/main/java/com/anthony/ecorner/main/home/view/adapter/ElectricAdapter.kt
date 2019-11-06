@@ -9,12 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
+import com.anthony.ecorner.dto.home.reponse.Electric
 
 class ElectricAdapter(private var context: Context) : RecyclerView.Adapter<ElectricAdapter.CardViewHolder>() {
 
-    private var data = mutableListOf<Drawable?>()
+    private var data = listOf<Electric>()
 
-    fun setDatas(data: MutableList<Drawable?>) {
+    fun setData(data: List<Electric>) {
         this.data = data
         notifyDataSetChanged()
     }

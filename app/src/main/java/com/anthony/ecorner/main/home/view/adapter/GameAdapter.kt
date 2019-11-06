@@ -9,12 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
+import com.anthony.ecorner.dto.home.reponse.Game
 
 class GameAdapter(private var context: Context) : RecyclerView.Adapter<GameAdapter.CardViewHolder>() {
 
-    private var data = mutableListOf<Drawable?>()
+    private var data = listOf<Game>()
 
-    fun setDatas(data: MutableList<Drawable?>) {
+    fun setData(data: List<Game>) {
         this.data = data
         notifyDataSetChanged()
     }

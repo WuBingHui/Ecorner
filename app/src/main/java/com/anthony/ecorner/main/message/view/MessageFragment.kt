@@ -10,13 +10,14 @@ import android.widget.ExpandableListView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.message.response.MessageDto
 import com.anthony.ecorner.main.message.view.adapter.MessageAdapter
+import com.csnt.android_sport.main.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_message.*
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class MessageFragment : Fragment() {
+class MessageFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
