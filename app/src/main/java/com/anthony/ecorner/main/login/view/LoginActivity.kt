@@ -17,6 +17,8 @@ import com.anthony.ecorner.main.registered.view.RegisteredActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
+
 class LoginActivity : BaseActivity() {
     private val viewModel by viewModel<LoginViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,13 +34,12 @@ class LoginActivity : BaseActivity() {
 
     private fun initView() {
 
-
         accountEditText.setEmailMode()
         passwordEditText.setPasswordMode()
 
         loginBtn.setOnClickListener {
             if (checkAccountEmpty() && checkAccountFormat() && checkPasswordEmpty()) {
-                viewModel.postLogin(LoginBo(accountEditText.getText(),passwordEditText.getText()))
+                viewModel.postLogin(LoginBo(accountEditText.getText(), passwordEditText.getText()))
             }
         }
 

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -19,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
 import com.anthony.ecorner.koin.Properties
+import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
+import com.anthony.ecorner.main.commodity.view.CommodityActivity
 import com.anthony.ecorner.main.home.view.adapter.*
 import com.anthony.ecorner.main.home.view.viewModel.HomeViewModel
 import com.anthony.ecorner.main.main.view.MainActivity
@@ -47,6 +48,10 @@ class HomeFragment : BaseFragment() {
     private lateinit var  hospitalAdapter : HospitalAdapter
     private lateinit var  electricAdapter : ElectricAdapter
     private lateinit var  gameAdapter : GameAdapter
+
+    companion object{
+        const val TYPE = "TYPE"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -120,6 +125,13 @@ class HomeFragment : BaseFragment() {
         val gameMoreLabel =
             view.findViewById<View>(R.id.gameType).findViewById<TextView>(R.id.moreLabel)
 
+        childMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.child)) }
+        travelMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.travel)) }
+        hospitalMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.hospital)) }
+        electricMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.electric)) }
+        gameMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.game)) }
+
+
         childRecyclerView =
             view.findViewById<View>(R.id.childType).findViewById(R.id.classRecyclerView)
         travelRecyclerView =
@@ -187,7 +199,14 @@ class HomeFragment : BaseFragment() {
                 }
             }
         })
+    }
 
-
+    private fun openCommodityPage(type:String){
+        context?.let {
+            val intent = Intent()
+            intent.putExtra(TYPE,type)
+            intent.setClass(it,CommodityActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
