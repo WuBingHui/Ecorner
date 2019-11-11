@@ -1,12 +1,12 @@
 package com.anthony.ecorner.main.base
 
+
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.anthony.ecorner.R
 import io.reactivex.disposables.CompositeDisposable
-
 open class BaseActivity : AppCompatActivity() {
 
     protected var compositeDisposable = CompositeDisposable()
@@ -20,12 +20,14 @@ open class BaseActivity : AppCompatActivity() {
             window.statusBarColor = ContextCompat.getColor(this, R.color.winterNevaLight)
         }
 
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.dispose()
     }
+
+
+
 
 }

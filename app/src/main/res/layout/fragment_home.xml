@@ -49,13 +49,12 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:drawableEnd="@mipmap/twotone_room_black_24"
+                android:drawableRight="@mipmap/twotone_room_black_24"
                 android:drawablePadding="2dp"
-                android:text="高雄市"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:drawableRight="@mipmap/twotone_room_black_24" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

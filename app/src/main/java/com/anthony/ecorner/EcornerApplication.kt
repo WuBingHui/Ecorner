@@ -29,6 +29,10 @@ class EcornerApplication : MultiDexApplication() {
         private var context: Context? = null
         fun getContext(): Context? = context
     }
+
+
+
+
 }
 
 

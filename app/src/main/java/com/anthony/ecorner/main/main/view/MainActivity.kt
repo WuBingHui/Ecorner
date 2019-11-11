@@ -1,10 +1,13 @@
 package com.anthony.ecorner.main.main.view
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.anthony.ecorner.R
 import com.anthony.ecorner.main.base.BaseActivity
@@ -14,8 +17,11 @@ import com.anthony.ecorner.main.message.view.MessageFragment
 import com.anthony.ecorner.main.personal.view.PersonalFragment
 import com.anthony.ecorner.main.update.view.UpdateFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
-class MainActivity : BaseActivity() {
+
+class MainActivity : BaseActivity(){
     private var exitTime: Long = 0
 
     companion object{
@@ -108,9 +114,9 @@ class MainActivity : BaseActivity() {
             exitTime = System.currentTimeMillis()
         } else {
             moveTaskToBack(true)
+
         }
     }
-
 
 }
 

@@ -4,7 +4,10 @@
     package="com.anthony.ecorner">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!-- 粗略定位授權 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 精細定位授權 -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:name=".EcornerApplication"
         android:allowBackup="true"
