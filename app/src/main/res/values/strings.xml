@@ -65,8 +65,14 @@
     <string name="commodity_address">"租借地址："</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--CommodityDetailFragment-->
+    <string name="commodity_detail">"商品詳細"</string>
+    <string name="apply_rent">"申請租借"</string>
+    <string name="rent_amount">"商品價格"</string>
+    <string name="rent_deposit">"商品押金"</string>
+    <string name="send_method">"寄送方式："</string>
+
+    <string name="pay_method">"付款方式："</string>
 
 
 </resources>

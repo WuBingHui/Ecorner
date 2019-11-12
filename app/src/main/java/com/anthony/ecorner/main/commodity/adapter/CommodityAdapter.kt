@@ -19,12 +19,16 @@ class CommodityAdapter(private var context: Context) :
     RecyclerView.Adapter<CommodityAdapter.CardViewHolder>() {
 
     private var data = listOf<Child>()
-
+    private var setItemClick: SetItemClick? = null
     fun setData(data: List<Child>) {
         this.data = data
         notifyDataSetChanged()
     }
 
+    interface SetItemClick {
+
+        fun onClick()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -43,8 +47,13 @@ class CommodityAdapter(private var context: Context) :
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.bind()
 
+        val iv = ((context as CommodityActivity).getWindowWidth() - context.dp2px(20) * 5) / 3
+        holder.classImg.layoutParams.width = iv
+        holder.classImg.layoutParams.height = iv
+        setItemClick?.let {itemClick->
+            holder.itemView.setOnClickListener { itemClick.onClick() }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -52,19 +61,17 @@ class CommodityAdapter(private var context: Context) :
     }
 
 
-    class CardViewHolder(itemView: View,private val context: Context) : RecyclerView.ViewHolder(itemView) {
-        lateinit var classImg: ImageView
-        lateinit var collectImg: ImageView
-        lateinit var descriptionLabel: TextView
-        lateinit var priceLabel: TextView
-        fun bind() {
-            classImg = itemView.findViewById(R.id.classImg)
-            collectImg = itemView.findViewById(R.id.collectImg)
-            descriptionLabel = itemView.findViewById(R.id.descriptionLabel)
-            priceLabel = itemView.findViewById(R.id.priceLabel)
-            val iv = ((context as CommodityActivity).getWindowWidth() - context.dp2px(20) * 5) / 3
-            classImg.layoutParams.width = iv
-            classImg.layoutParams.height = iv
-        }
+    inner class CardViewHolder internal constructor(itemView: View, context: Context) :
+        RecyclerView.ViewHolder(itemView) {
+        var classImg: ImageView = itemView.findViewById(R.id.classImg)
+        var collectImg: ImageView = itemView.findViewById(R.id.collectImg)
+        var descriptionLabel: TextView = itemView.findViewById(R.id.descriptionLabel)
+        var priceLabel: TextView = itemView.findViewById(R.id.priceLabel)
+
+
+    }
+
+    fun setOnItemClick(setItemClick: SetItemClick) {
+        this.setItemClick = setItemClick
     }
 }

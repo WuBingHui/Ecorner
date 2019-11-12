@@ -12,6 +12,7 @@ import com.anthony.ecorner.extension.isEmailFormat
 import com.anthony.ecorner.koin.Properties
 import com.anthony.ecorner.main.main.view.MainActivity
 import com.anthony.ecorner.main.base.BaseActivity
+import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
 import com.anthony.ecorner.main.login.viewModel.LoginViewModel
 import com.anthony.ecorner.main.registered.view.RegisteredActivity
 import kotlinx.android.synthetic.main.activity_login.*
@@ -29,6 +30,10 @@ class LoginActivity : BaseActivity() {
         initView()
 
         initViewModel()
+
+
+
+
     }
 
 
