@@ -8,26 +8,28 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
+import com.anthony.ecorner.dto.commodity.response.Product
 import com.anthony.ecorner.dto.home.reponse.Child
 import com.anthony.ecorner.extension.dp2px
 import com.anthony.ecorner.extension.getWindowWidth
 import com.anthony.ecorner.main.commodity.view.CommodityActivity
 import com.anthony.ecorner.main.commodity.view.CommodityActivity.Companion.commodityActivity
 import com.anthony.ecorner.main.main.view.MainActivity.Companion.activity
+import com.bumptech.glide.Glide
 
 class CommodityAdapter(private var context: Context) :
     RecyclerView.Adapter<CommodityAdapter.CardViewHolder>() {
 
-    private var data = listOf<Child>()
+    private var data = listOf<Product>()
     private var setItemClick: SetItemClick? = null
-    fun setData(data: List<Child>) {
+    fun setData(data: List<Product>) {
         this.data = data
         notifyDataSetChanged()
     }
 
     interface SetItemClick {
 
-        fun onClick()
+        fun onClick(id:Int)
     }
 
     override fun onCreateViewHolder(
@@ -48,16 +50,27 @@ class CommodityAdapter(private var context: Context) :
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
 
-        val iv = ((context as CommodityActivity).getWindowWidth() - context.dp2px(20) * 5) / 3
-        holder.classImg.layoutParams.width = iv
-        holder.classImg.layoutParams.height = iv
-        setItemClick?.let {itemClick->
-            holder.itemView.setOnClickListener { itemClick.onClick() }
+        context?.let {context->
+            data[position].images?.let {
+                Glide.with(context)
+                    .load(it[0])
+                    .placeholder(R.drawable.mobile)
+                    .into( holder.classImg)
+            }
+            holder. descriptionLabel.text = data[position].name
+            holder. priceLabel.text = String.format(context.getString(R.string.amount),data[position].rent_amount.toString())
+            val iv = ((context as CommodityActivity).getWindowWidth() - context.dp2px(20) * 5) / 3
+            holder.classImg.layoutParams.width = iv
+            holder.classImg.layoutParams.height = iv
+            setItemClick?.let {itemClick->
+                holder.itemView.setOnClickListener { itemClick.onClick(data[position].id) }
+            }
+
         }
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return data.size
     }
 
 

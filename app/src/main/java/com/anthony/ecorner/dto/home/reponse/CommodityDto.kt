@@ -1,13 +1,17 @@
 package com.anthony.ecorner.dto.home.reponse
 
 data class CommodityDto(
-    val child: List<Child>,
-    val electric: List<Electric>,
-    val game: List<Game>,
-    val hospital: List<Hospital>,
-    val result: Boolean,
+    val categories: Categories,
     val error: String,
-    val travel: List<Travel>
+    val result: Boolean
+)
+
+data class Categories(
+    val child: List<Child>?,
+    val electric: List<Electric>?,
+    val game: List<Game>?,
+    val hospital: List<Hospital>?,
+    val travel: List<Travel>?
 )
 
 data class Child(
@@ -16,9 +20,10 @@ data class Child(
     val deposit_amount: Int,
     val description: String,
     val id: Int,
-    val images: List<String>,
+    val images: List<String>?,
     val name: String,
-    val rent_amount: Int
+    val rent_amount: Int,
+    val status: Int
 )
 
 data class Electric(
@@ -27,9 +32,10 @@ data class Electric(
     val deposit_amount: Int,
     val description: String,
     val id: Int,
-    val images: List<String>,
+    val images: List<String>?,
     val name: String,
-    val rent_amount: Int
+    val rent_amount: Int,
+    val status: Int
 )
 
 data class Game(
@@ -38,9 +44,10 @@ data class Game(
     val deposit_amount: Int,
     val description: String,
     val id: Int,
-    val images: List<String>,
+    val images: List<String>?,
     val name: String,
-    val rent_amount: Int
+    val rent_amount: Int,
+    val status: Int
 )
 
 data class Hospital(
@@ -49,9 +56,10 @@ data class Hospital(
     val deposit_amount: Int,
     val description: String,
     val id: Int,
-    val images: List<String>,
+    val images: List<String>?,
     val name: String,
-    val rent_amount: Int
+    val rent_amount: Int,
+    val status: Int
 )
 
 data class Travel(
@@ -60,7 +68,8 @@ data class Travel(
     val deposit_amount: Int,
     val description: String,
     val id: Int,
-    val images: List<String>,
+    val images: List<String>?,
     val name: String,
-    val rent_amount: Int
+    val rent_amount: Int,
+    val status: Int
 )

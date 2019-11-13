@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.home.reponse.Hospital
+import com.bumptech.glide.Glide
 
 class HospitalAdapter(private var context: Context) : RecyclerView.Adapter<HospitalAdapter.CardViewHolder>() {
 
@@ -36,11 +37,19 @@ class HospitalAdapter(private var context: Context) : RecyclerView.Adapter<Hospi
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         holder.bind()
-
+        val data = data[position]
+        data.images?.let {
+            Glide.with(context)
+                .load(it[0])
+                .placeholder(R.drawable.mobile)
+                .into( holder.classImg)
+        }
+        holder. descriptionLabel.text =  data.name
+        holder. priceLabel.text = String.format(context.getString(R.string.amount),data.rent_amount.toString())
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return data.size
     }
 
 

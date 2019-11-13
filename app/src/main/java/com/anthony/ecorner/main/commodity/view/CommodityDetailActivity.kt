@@ -1,16 +1,23 @@
 package com.anthony.ecorner.main.commodity.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.anthony.ecorner.R
+import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.main.base.BaseActivity
 import com.anthony.ecorner.main.commodity.adapter.CommodityDetailAdapter
+import com.anthony.ecorner.main.commodity.viewmodel.CommodityViewModel
+import com.anthony.ecorner.widget.CustomLoadingDialog
 import kotlinx.android.synthetic.main.activity_commodity_detail.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CommodityDetailActivity : AppCompatActivity() {
+class CommodityDetailActivity : BaseActivity() {
 
+    private val loadingDialog = CustomLoadingDialog.newInstance()
 
+    private val viewModel by viewModel<CommodityViewModel>()
     enum class SendMethod {
         SELF_GET,
         SUPER_COMMERCIA,
@@ -22,17 +29,21 @@ class CommodityDetailActivity : AppCompatActivity() {
         TRANSFER
     }
 
+    private var id = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_commodity_detail)
 
 
         initView()
-
+        initViewModel()
+        loadingDialog.show(supportFragmentManager,loadingDialog.tag)
+        viewModel.getCommodityDetail(id)
     }
 
     private fun initView() {
-
+        id = intent.getIntExtra("ID",0)
         selfGetRadioBtn.setOnClickListener {
             setSendMethodRadioStatus(SendMethod.SELF_GET)
         }
@@ -46,15 +57,7 @@ class CommodityDetailActivity : AppCompatActivity() {
         transferRadioBtn.setOnClickListener { setPayMethodRadioStatus(PayMethod.TRANSFER) }
         cashOnDeliveryRadioBtn.setOnClickListener { setPayMethodRadioStatus(PayMethod.CASH_ON_DELIVERY) }
 
-        val imgArray = arrayOf(
-            ContextCompat.getDrawable(this, R.drawable.banner_1),
-            ContextCompat.getDrawable(this, R.drawable.banner_2),
-            ContextCompat.getDrawable(this, R.drawable.banner_3)
-        )
 
-        var commodityDetailAdapter = CommodityDetailAdapter(this)
-        commdoityViewPager.adapter = commodityDetailAdapter
-        commodityDetailAdapter.setData(imgArray)
     }
 
 
@@ -103,5 +106,30 @@ class CommodityDetailActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun initViewModel(){
+        viewModel.onCommodityDetail.observe(this, Observer { dto->
+            when (dto.status) {
+                Status.SUCCESS -> {
+                    dto.data?.product?.let {
+                        it.images?.let {images->
+                            val commodityDetailAdapter = CommodityDetailAdapter(this)
+                            commdoityViewPager.adapter = commodityDetailAdapter
+                            commodityDetailAdapter.setData(images)
+                        }
+                        commodityTitleLabel.text = it.name
+                        amountLabel.text = String.format(getString(R.string.amount),it.rent_amount.toString())
+                        depositLabel.text =String.format(getString(R.string.amount),it.deposit_amount.toString())
+                        descriptionLabel.text =it.description
+                        rentAddressLabel.text =it.address
+                    }
+                }
+                Status.FAILED -> {
+                    Toast.makeText(this, dto.data?.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+            loadingDialog.dismiss()
+        })
     }
 }

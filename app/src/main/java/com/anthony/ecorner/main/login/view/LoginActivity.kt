@@ -15,6 +15,7 @@ import com.anthony.ecorner.main.base.BaseActivity
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
 import com.anthony.ecorner.main.login.viewModel.LoginViewModel
 import com.anthony.ecorner.main.registered.view.RegisteredActivity
+import com.anthony.ecorner.widget.CustomLoadingDialog
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,6 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity() {
     private val viewModel by viewModel<LoginViewModel>()
+    private val loadingDialog =  CustomLoadingDialog.newInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         //window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         super.onCreate(savedInstanceState)
@@ -44,6 +46,7 @@ class LoginActivity : BaseActivity() {
 
         loginBtn.setOnClickListener {
             if (checkAccountEmpty() && checkAccountFormat() && checkPasswordEmpty()) {
+                loadingDialog.show(supportFragmentManager,loadingDialog.tag)
                 viewModel.postLogin(LoginBo(accountEditText.getText(), passwordEditText.getText()))
             }
         }
@@ -83,6 +86,7 @@ class LoginActivity : BaseActivity() {
     private fun initViewModel() {
 
         viewModel.onLogin.observe(this, Observer { dto ->
+            loadingDialog.dismiss()
             when (dto.status) {
                 Status.SUCCESS -> {
                     Properties.setToken(dto.data?.user!!.id)

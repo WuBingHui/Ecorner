@@ -27,7 +27,6 @@
             android:id="@+id/classImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/ic_launcher"
             android:contentDescription="@string/app_name" />
 
         <ImageView

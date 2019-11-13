@@ -2,6 +2,7 @@ package com.anthony.ecorner.koin
 
 
 
+import com.anthony.ecorner.main.commodity.viewmodel.CommodityViewModel
 import com.anthony.ecorner.main.home.view.viewModel.HomeViewModel
 import com.anthony.ecorner.main.login.viewModel.LoginViewModel
 import com.anthony.ecorner.main.personal.view.viewModel.PersonalViewModel
@@ -20,4 +21,7 @@ val viewModelModule = module {
 
     //home
     viewModel { HomeViewModel(get()) }
+
+    //商品
+    viewModel { CommodityViewModel(get(),get()) }
 }

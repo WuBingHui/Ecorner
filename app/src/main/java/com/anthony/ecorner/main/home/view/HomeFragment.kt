@@ -28,6 +28,8 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.util.Log
+import com.anthony.ecorner.untils.ProductType
+import com.anthony.ecorner.widget.CustomLoadingDialog
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -42,7 +44,7 @@ import java.util.*
 
 class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
-
+    private val loadingDialog = CustomLoadingDialog.newInstance()
     private val viewModel by viewModel<HomeViewModel>()
     private lateinit var childRecyclerView: RecyclerView
     private lateinit var travelRecyclerView: RecyclerView
@@ -58,6 +60,7 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
 
     companion object {
+        const val TYPE_NAME = "TYPE_NAME"
         const val TYPE = "TYPE"
         const val LOCATION_REQUEST_CODE = 1000
     }
@@ -67,12 +70,17 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView(view)
         initRecyclerView()
         initViewModel()
         checkLocationPermission()
-        return view
+        loadingDialog.show(fragmentManager!!, loadingDialog.tag)
+        viewModel.getCommodity()
     }
 
 
@@ -137,11 +145,36 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         val gameMoreLabel =
             view.findViewById<View>(R.id.gameType).findViewById<TextView>(R.id.moreLabel)
 
-        childMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.child)) }
-        travelMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.travel)) }
-        hospitalMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.hospital)) }
-        electricMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.electric)) }
-        gameMoreLabel.setOnClickListener { openCommodityPage(getString(R.string.game)) }
+        childMoreLabel.setOnClickListener {
+            openCommodityPage(
+                getString(R.string.child),
+                ProductType.CHILD.value
+            )
+        }
+        travelMoreLabel.setOnClickListener {
+            openCommodityPage(
+                getString(R.string.travel),
+                ProductType.TRAVEL.value
+            )
+        }
+        hospitalMoreLabel.setOnClickListener {
+            openCommodityPage(
+                getString(R.string.hospital),
+                ProductType.HOSPITAL.value
+            )
+        }
+        electricMoreLabel.setOnClickListener {
+            openCommodityPage(
+                getString(R.string.electric),
+                ProductType.ELECTRIC.value
+            )
+        }
+        gameMoreLabel.setOnClickListener {
+            openCommodityPage(
+                getString(R.string.game),
+                ProductType.GAME.value
+            )
+        }
 
 
         childRecyclerView =
@@ -187,7 +220,6 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             electricRecyclerView.adapter = electricAdapter
             gameRecyclerView.adapter = gameAdapter
 
-            viewModel.getCommodity()
 
         }
     }
@@ -199,11 +231,21 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
                 when (dto.status) {
                     Status.SUCCESS -> {
                         dto.data?.let {
-                            childAdapter.setData(it.child)
-                            travelAdapter.setData(it.travel)
-                            hospitalAdapter.setData(it.hospital)
-                            electricAdapter.setData(it.electric)
-                            gameAdapter.setData(it.game)
+                            it.categories.child?.let {
+                                childAdapter.setData(it)
+                            }
+                            it.categories.travel?.let {
+                                travelAdapter.setData(it)
+                            }
+                            it.categories.hospital?.let {
+                                hospitalAdapter.setData(it)
+                            }
+                            it.categories.electric?.let {
+                                electricAdapter.setData(it)
+                            }
+                            it.categories.game?.let {
+                                gameAdapter.setData(it)
+                            }
                         }
                     }
                     Status.FAILED -> {
@@ -211,12 +253,14 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
                     }
                 }
             }
+            loadingDialog.dismiss()
         })
     }
 
-    private fun openCommodityPage(type: String) {
+    private fun openCommodityPage(typeName: String, type: String) {
         context?.let {
             val intent = Intent()
+            intent.putExtra(TYPE_NAME, typeName)
             intent.putExtra(TYPE, type)
             intent.setClass(it, CommodityActivity::class.java)
             startActivity(intent)
@@ -255,7 +299,7 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
     private fun checkLocationPermission() {
         if (EasyPermissions.hasPermissions(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            Log.e("aaaaaaa","我有近來")
+            Log.e("aaaaaaa", "我有近來")
             getLocation()
         } else {
             EasyPermissions.requestPermissions(
@@ -275,18 +319,18 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 //         設定更新速度
             locationRequest.interval = 60000
-            Log.i(
-                " aaaaaaaaaaa",
-                "我有近來"
-            )
             mLocationProviderClient.requestLocationUpdates(
                 locationRequest,
                 object : LocationCallback() {
                     override fun onLocationResult(locationresult: LocationResult?) {
                         val geocoder = Geocoder(it, Locale.TAIWAN)
-                         var addresses:List<Address> = geocoder.getFromLocation (locationresult?.lastLocation?.latitude!!, locationresult.lastLocation.longitude, 1)
-                        var  address:Address = addresses[0]
-                        cityLabel.text =  address.adminArea.toString()
+                        val addresses: List<Address> = geocoder.getFromLocation(
+                            locationresult?.lastLocation?.latitude!!,
+                            locationresult.lastLocation.longitude,
+                            1
+                        )
+                        val address: Address = addresses[0]
+                        cityLabel.text = address.adminArea.toString()
                     }
                 },
                 null

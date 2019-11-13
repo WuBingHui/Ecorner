@@ -14,7 +14,7 @@ interface HomeService {
     /**
      * 取得首頁商品
      */
-    @GET("api/auth/login")
+    @GET("api/product/index")
     fun getCommodity(): Single<CommodityDto>
 
 

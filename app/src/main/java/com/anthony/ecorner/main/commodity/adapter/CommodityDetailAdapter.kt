@@ -13,11 +13,11 @@ import com.bumptech.glide.Glide
 class CommodityDetailAdapter(private val context:Context): RecyclerView.Adapter<CommodityDetailAdapter.ViewHolder>() {
 
 
-    private var img:Array<Drawable?> = arrayOf()
+    private var imgList:List<String> = listOf()
     private var setItemClick:SetItemClick? = null
 
-    fun setData(arrayImg: Array<Drawable?>){
-        this.img=arrayImg
+    fun setData(imgList: List<String>){
+        this.imgList=imgList
         notifyDataSetChanged()
     }
     interface SetItemClick{
@@ -31,12 +31,13 @@ class CommodityDetailAdapter(private val context:Context): RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        return img.size
+        return imgList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(context)
-            .load(img[position])
+            .load(imgList[position])
+            .placeholder(R.drawable.ic_launcher_background)
             .into(holder.bannerImg)
         setItemClick?.let {
             holder.itemView.setOnClickListener { it }

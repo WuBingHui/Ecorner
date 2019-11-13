@@ -2,6 +2,7 @@ package com.anthony.ecorner.koin
 
 
 import com.anthony.ecorner.main.registered.viewModel.RegisteredViewModel
+import com.anthony.ecorner.model.commodity.CommodityModel
 import com.anthony.ecorner.model.home.HomeModel
 import com.anthony.ecorner.model.login.LoginModel
 import com.anthony.ecorner.model.personal.PersonalModel
@@ -19,4 +20,6 @@ val repositoryModule = module {
     factory { PersonalModel(get()) }
     //home
     factory { HomeModel(get()) }
+    //商品列表
+    factory { CommodityModel(get()) }
 }

@@ -46,6 +46,8 @@
     <string name="hospital">"醫療"</string>
     <string name="electric">"3C用品"</string>
     <string name="game">"休閒娛樂"</string>
+    <string name="amount">"$%s"</string>
+
 
     <!--ProfileFragment-->
     <string name="person">"個人資料"</string>
