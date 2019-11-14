@@ -6,9 +6,7 @@ import com.csnt.android_sport.extension.ioToUi
 
 class RegisteredModel(val service: RegisteredService) {
 
-
     fun postRegistered(registeredBo: RegisteredBo) =
         service.postRegistered(registeredBo).ioToUi()
-
 
 }

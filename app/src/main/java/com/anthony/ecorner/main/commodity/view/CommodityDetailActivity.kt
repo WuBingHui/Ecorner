@@ -1,11 +1,15 @@
 package com.anthony.ecorner.main.commodity.view
 
+import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.dto.commodity.request.ApplyCommodityBo
 import com.anthony.ecorner.main.base.BaseActivity
 import com.anthony.ecorner.main.commodity.adapter.CommodityDetailAdapter
 import com.anthony.ecorner.main.commodity.viewmodel.CommodityViewModel
@@ -18,6 +22,7 @@ class CommodityDetailActivity : BaseActivity() {
     private val loadingDialog = CustomLoadingDialog.newInstance()
 
     private val viewModel by viewModel<CommodityViewModel>()
+
     enum class SendMethod {
         SELF_GET,
         SUPER_COMMERCIA,
@@ -30,6 +35,8 @@ class CommodityDetailActivity : BaseActivity() {
     }
 
     private var id = 0
+    private var startTime =1
+    private var endTime = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +45,12 @@ class CommodityDetailActivity : BaseActivity() {
 
         initView()
         initViewModel()
-        loadingDialog.show(supportFragmentManager,loadingDialog.tag)
+        loadingDialog.show(supportFragmentManager, loadingDialog.tag)
         viewModel.getCommodityDetail(id)
     }
 
     private fun initView() {
-        id = intent.getIntExtra("ID",0)
+        id = intent.getIntExtra("ID", 0)
         selfGetRadioBtn.setOnClickListener {
             setSendMethodRadioStatus(SendMethod.SELF_GET)
         }
@@ -57,7 +64,39 @@ class CommodityDetailActivity : BaseActivity() {
         transferRadioBtn.setOnClickListener { setPayMethodRadioStatus(PayMethod.TRANSFER) }
         cashOnDeliveryRadioBtn.setOnClickListener { setPayMethodRadioStatus(PayMethod.CASH_ON_DELIVERY) }
 
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
 
+        startTimeLabel.setOnClickListener {
+            val dataPickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                startTime = "$year${monthOfYear+1}$dayOfMonth".toInt()
+                startTimeLabel.text ="$year-${monthOfYear+1}-$dayOfMonth"
+            }, year, month, day)
+
+            dataPickerDialog.show()
+        }
+        endTimeLabel.setOnClickListener {
+
+            val dataPickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                endTime = "$year${monthOfYear+1}$dayOfMonth".toInt()
+                endTimeLabel.text ="$year-${monthOfYear+1}-$dayOfMonth"
+            }, year, month, day)
+
+            dataPickerDialog.show()
+        }
+
+        rentBtn.setOnClickListener {
+            if(startTimeLabel.text.isEmpty() || endTimeLabel.text.isEmpty()){
+                Toast.makeText(this,"請選擇時間!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if(startTime>endTime){
+                Toast.makeText(this,"開始時間不可大於結束時間!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            showConfirmAlerDialog() }
     }
 
 
@@ -108,21 +147,23 @@ class CommodityDetailActivity : BaseActivity() {
         }
     }
 
-    private fun initViewModel(){
-        viewModel.onCommodityDetail.observe(this, Observer { dto->
+    private fun initViewModel() {
+        viewModel.onCommodityDetail.observe(this, Observer { dto ->
             when (dto.status) {
                 Status.SUCCESS -> {
                     dto.data?.product?.let {
-                        it.images?.let {images->
+                        it.images?.let { images ->
                             val commodityDetailAdapter = CommodityDetailAdapter(this)
                             commdoityViewPager.adapter = commodityDetailAdapter
                             commodityDetailAdapter.setData(images)
                         }
                         commodityTitleLabel.text = it.name
-                        amountLabel.text = String.format(getString(R.string.amount),it.rent_amount.toString())
-                        depositLabel.text =String.format(getString(R.string.amount),it.deposit_amount.toString())
-                        descriptionLabel.text =it.description
-                        rentAddressLabel.text =it.address
+                        amountLabel.text =
+                            String.format(getString(R.string.amount), it.rent_amount.toString())
+                        depositLabel.text =
+                            String.format(getString(R.string.amount), it.deposit_amount.toString())
+                        descriptionLabel.text = it.description
+                        rentAddressLabel.text = it.address
                     }
                 }
                 Status.FAILED -> {
@@ -131,5 +172,30 @@ class CommodityDetailActivity : BaseActivity() {
             }
             loadingDialog.dismiss()
         })
+        viewModel.onApplyCommodity.observe(this, Observer { dto ->
+            when (dto.status) {
+                Status.SUCCESS -> {
+                    Toast.makeText(this, "申請成功!", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                Status.FAILED -> {
+                    Toast.makeText(this, dto.data?.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+            loadingDialog.dismiss()
+        })
+    }
+
+    private fun showConfirmAlerDialog() {
+        AlertDialog.Builder(this)
+            .setMessage(descriptionLabel.text)
+            .setTitle(commodityTitleLabel.text)
+            .setPositiveButton("申請") { _, _ ->
+                loadingDialog.show(supportFragmentManager,loadingDialog.tag)
+                viewModel.postApply(ApplyCommodityBo(id,startTimeLabel.text.toString(),endTimeLabel.text.toString()))
+            }
+            .setNeutralButton("取消", null)
+            .create()
+            .show()
     }
 }

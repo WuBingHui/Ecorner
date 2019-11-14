@@ -7,11 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.anthony.ecorner.R
+import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.dto.message.response.Apply
 import com.anthony.ecorner.dto.message.response.MessageDto
+import com.anthony.ecorner.main.home.view.viewModel.HomeViewModel
 import com.anthony.ecorner.main.message.view.adapter.MessageAdapter
+import com.anthony.ecorner.main.message.view.viewModel.MessageViewModel
+import com.anthony.ecorner.widget.CustomLoadingDialog
 import com.csnt.android_sport.main.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_message.*
+import okhttp3.internal.lockAndWaitNanos
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -19,49 +28,59 @@ import kotlinx.android.synthetic.main.fragment_message.*
  */
 class MessageFragment : BaseFragment() {
 
+    private val viewModel by viewModel<MessageViewModel>()
+    private val loadingFragment = CustomLoadingDialog.newInstance()
+    private var  messageAdapter:MessageAdapter? =null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_message, container, false)
-        initView(view)
-        return view
+        return  inflater.inflate(R.layout.fragment_message, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView(view)
+        initViewModel()
+
+    }
+
+    override fun getData() {
+        fragmentManager?.let {
+            loadingFragment.show(it, loadingFragment.tag)
+        }
+        viewModel.getNotify()
+    }
 
     private fun initView(view: View) {
 
-        context?.let {
-            val data = ArrayList<MessageDto>()
-            data.add(
-                MessageDto(
-                    "出租通知",
-                    arrayListOf("你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。")
-                )
-            )
-            data.add(
-                MessageDto(
-                    "系統通知",
-                    arrayListOf("你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。")
-                )
-            )
-            data.add(
-                MessageDto(
-                    "出租通知",
-                    arrayListOf("你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。")
-                )
-            )
-            data.add(
-                MessageDto(
-                    "系統通知",
-                    arrayListOf("你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。你的出租物已經組出囉。")
-                )
-            )
-            val messageListView = view.findViewById<ExpandableListView>(R.id.messageListView)
-            val messageAdapter = MessageAdapter(it, data)
+        context?.let {context->
+
+            messageAdapter = MessageAdapter(context)
             messageListView.setAdapter(messageAdapter)
-            messageAdapter.setData(data)
         }
+
+    }
+
+    private fun initViewModel() {
+
+        viewModel.onNotify.observe(this, Observer { dto ->
+
+            when (dto.status) {
+                Status.SUCCESS -> {
+                    dto.data?.let {
+                        context?.let {context->
+
+                            messageAdapter?.setData(it.apply.toMutableList())
+                        }
+                    }
+                }
+                Status.FAILED -> {
+                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                }
+            }
+            loadingFragment.dismiss()
+        })
 
     }
 

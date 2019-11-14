@@ -12,6 +12,7 @@ import com.anthony.ecorner.extension.isEmailFormat
 import com.anthony.ecorner.extension.isTaiwanPhone
 import com.anthony.ecorner.main.base.BaseActivity
 import com.anthony.ecorner.main.registered.viewModel.RegisteredViewModel
+import com.anthony.ecorner.widget.CustomLoadingDialog
 import kotlinx.android.synthetic.main.activity_registered.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RegisteredActivity : BaseActivity() {
 
     private val viewModel by viewModel<RegisteredViewModel>()
+    private val loadingDialog = CustomLoadingDialog.newInstance()
      var activityRegisteredBinding: ActivityRegisteredBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,7 @@ class RegisteredActivity : BaseActivity() {
                     Toast.makeText(this, dto.data?.error, Toast.LENGTH_SHORT).show()
                 }
             }
+            loadingDialog.dismiss()
         })
 
     }
@@ -70,6 +73,7 @@ class RegisteredActivity : BaseActivity() {
             checkPhoneFormat() &&
             checkAddress()
         ) {
+            loadingDialog.show(supportFragmentManager,loadingDialog.tag)
             viewModel.postRegistered(RegisteredBo(accountEditText.getText(),passwordEditText.getText(),nameEditText.getText(),phoneEditText.getText(),addressEditText.getText()))
 
         }

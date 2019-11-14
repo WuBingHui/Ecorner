@@ -3,6 +3,8 @@ package com.anthony.ecorner.main.commodity.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.anthony.ecorner.dto.Resource
 import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.dto.commodity.request.ApplyCommodityBo
+import com.anthony.ecorner.dto.commodity.response.ApplyCommodityDto
 import com.anthony.ecorner.dto.commodity.response.CommodityDetailDto
 import com.anthony.ecorner.dto.commodity.response.UniqueCommodityDto
 import com.anthony.ecorner.dto.home.reponse.CommodityDto
@@ -24,6 +26,7 @@ class CommodityViewModel(
 
     val onCommodityDetail: MutableLiveData<Resource<CommodityDetailDto>> by lazy { MutableLiveData<Resource<CommodityDetailDto>>() }
 
+    val onApplyCommodity: MutableLiveData<Resource<ApplyCommodityDto>> by lazy { MutableLiveData<Resource<ApplyCommodityDto>>() }
 
     fun getCommodity() {
         homeModel.getCommodity().ioToUi().subscribe(
@@ -58,6 +61,18 @@ class CommodityViewModel(
                     onCommodityDetail.value = Resource.error(dto.error, dto)
                 }
             }, { t: Throwable? -> onCommodityDetail.value = Resource.error(t?.message, null) }
+        ).addTo(compositeDisposable)
+    }
+
+    fun postApply(applyCommodityBo: ApplyCommodityBo) {
+        commodityModel.postApply(applyCommodityBo).ioToUi().subscribe(
+            { dto ->
+                if (dto.result == Status.SUCCESS.value) {
+                    onApplyCommodity.value = Resource.success(dto)
+                } else {
+                    onApplyCommodity.value = Resource.error(dto.error, dto)
+                }
+            }, { t: Throwable? -> onApplyCommodity.value = Resource.error(t?.message, null) }
         ).addTo(compositeDisposable)
     }
 }

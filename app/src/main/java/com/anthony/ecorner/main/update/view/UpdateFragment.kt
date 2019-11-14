@@ -24,6 +24,10 @@ import com.csnt.android_sport.main.base.BaseFragment
 class UpdateFragment : BaseFragment() ,View.OnTouchListener{
 
 
+    override fun getData() {
+    }
+
+
     companion object {
         const val LEFT_IMAGE = 0
         const val MID_IMAGE = 1

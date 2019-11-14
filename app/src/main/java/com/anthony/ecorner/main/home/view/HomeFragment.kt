@@ -28,6 +28,9 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.util.Log
+import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
+import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
+import com.anthony.ecorner.main.message.view.viewModel.MessageViewModel
 import com.anthony.ecorner.untils.ProductType
 import com.anthony.ecorner.widget.CustomLoadingDialog
 import com.google.android.gms.location.LocationCallback
@@ -43,6 +46,8 @@ import java.util.*
 
 
 class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
+
+
 
     private val loadingDialog = CustomLoadingDialog.newInstance()
     private val viewModel by viewModel<HomeViewModel>()
@@ -73,14 +78,18 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+
+    override fun getData() {
+        loadingDialog.show(fragmentManager!!, loadingDialog.tag)
+        viewModel.getCommodity()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
         initRecyclerView()
         initViewModel()
         checkLocationPermission()
-        loadingDialog.show(fragmentManager!!, loadingDialog.tag)
-        viewModel.getCommodity()
     }
 
 
@@ -220,6 +229,32 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             electricRecyclerView.adapter = electricAdapter
             gameRecyclerView.adapter = gameAdapter
 
+            childAdapter.setOnItemClick(object :ChildAdapter.SetItemClick{
+                override fun onClick(id: Int) {
+                    goCommodityDetailPage(id)
+                }
+            })
+            travelAdapter.setOnItemClick(object :TravelAdapter.SetItemClick{
+                override fun onClick(id: Int) {
+                    goCommodityDetailPage(id)
+                }
+            })
+            hospitalAdapter.setOnItemClick(object :HospitalAdapter.SetItemClick{
+                override fun onClick(id: Int) {
+                    goCommodityDetailPage(id)
+                }
+            })
+            electricAdapter.setOnItemClick(object :ElectricAdapter.SetItemClick{
+                override fun onClick(id: Int) {
+                    goCommodityDetailPage(id)
+                }
+            })
+            gameAdapter.setOnItemClick(object :GameAdapter.SetItemClick{
+                override fun onClick(id: Int) {
+                    goCommodityDetailPage(id)
+                }
+            })
+
 
         }
     }
@@ -337,6 +372,14 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             )
         }
 
+    }
+    private fun goCommodityDetailPage(id:Int){
+        context?.let {
+            val intent = Intent()
+            intent.putExtra("ID",id)
+            intent.setClass(it, CommodityDetailActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

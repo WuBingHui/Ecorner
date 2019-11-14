@@ -73,8 +73,12 @@
     <string name="rent_amount">"商品價格"</string>
     <string name="rent_deposit">"商品押金"</string>
     <string name="send_method">"寄送方式："</string>
-
     <string name="pay_method">"付款方式："</string>
+    <string name="apply_time">"租借時間："</string>
+
+
+    <!--MessageFragment-->
+    <string name="message_notify">訊息通知</string>
 
 
 </resources>

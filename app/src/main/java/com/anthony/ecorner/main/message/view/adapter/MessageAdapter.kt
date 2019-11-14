@@ -7,23 +7,20 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import com.anthony.ecorner.R
+import com.anthony.ecorner.dto.message.response.Apply
 import com.anthony.ecorner.dto.message.response.MessageDto
 
-class MessageAdapter(private val context: Context,data:ArrayList<MessageDto> ) : BaseExpandableListAdapter(){
+class MessageAdapter(private val context: Context) : BaseExpandableListAdapter(){
 
-    var data = mutableListOf<MessageDto>()
+    var messageData = mutableListOf<Apply>()
 
-    init {
-        this.data = data
-    }
-
-    fun setData(data:ArrayList<MessageDto>){
-        this.data = data
+    fun setData(data:MutableList<Apply>){
+        this.messageData = data
         notifyDataSetChanged()
     }
 
     override fun getGroup(p0: Int): Any {
-        return data[p0]
+        return messageData[p0]
     }
 
     override fun isChildSelectable(p0: Int, p1: Int): Boolean {
@@ -35,7 +32,7 @@ class MessageAdapter(private val context: Context,data:ArrayList<MessageDto> ) :
     }
 
     override fun getChild(p0: Int, p1: Int): Any {
-        return data[p0].message[p1]
+        return messageData[p0]
     }
 
     override fun getGroupId(p0: Int): Long {
@@ -47,23 +44,23 @@ class MessageAdapter(private val context: Context,data:ArrayList<MessageDto> ) :
     }
 
     override fun getGroupCount(): Int {
-            return data.size
+            return messageData.size
     }
     override fun getChildrenCount(p0: Int): Int {
-        return data[p0].message.size
+        return 1
     }
 
     override fun getGroupView(p0: Int, p1: Boolean, p2: View?, p3: ViewGroup?): View {
       val view =  LayoutInflater.from(context).inflate(R.layout.view_message_parent_item, null)
         val messageTitleLabel = view.findViewById<TextView>(R.id.messageTitleLabel)
-        messageTitleLabel.text = data[p0].title
+        messageTitleLabel.text = context.getString(R.string.message_notify)
         return view
     }
 
     override fun getChildView(p0: Int, p1: Int, p2: Boolean, p3: View?, p4: ViewGroup?): View {
         val view =  LayoutInflater.from(context).inflate(R.layout.view_message_child_item, null)
         val messageLabel = view.findViewById<TextView>(R.id.messageLabel)
-        messageLabel.text = data[p0].message[p1]
+        messageLabel.text =   messageData[p0].description
         return view
     }
 

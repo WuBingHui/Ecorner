@@ -8,6 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import java.net.CookieManager
+import java.net.CookiePolicy
 import java.util.concurrent.TimeUnit
 
 val ecornerModule = module {
@@ -16,8 +18,12 @@ val ecornerModule = module {
 
 fun createOkHttpClient(openInterceptor: Boolean = true): OkHttpClient {
     val httpClient = OkHttpClient.Builder()
+    val cookieManager = CookieManager()
+    cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
+    val cookieJar = JavaNetCookieJar(cookieManager)
     httpClient.connectTimeout(20, TimeUnit.SECONDS)
         .readTimeout(20, TimeUnit.SECONDS)
+        .cookieJar(cookieJar)
         .followRedirects(false)
         .followSslRedirects(false)
         .addInterceptor(

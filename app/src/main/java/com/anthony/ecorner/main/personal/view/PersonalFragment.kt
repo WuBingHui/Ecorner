@@ -27,6 +27,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * A simple [Fragment] subclass.
  */
 class PersonalFragment : BaseFragment() {
+    override fun getData() {
+    }
 
     private val viewModel by viewModel<PersonalViewModel>()
 

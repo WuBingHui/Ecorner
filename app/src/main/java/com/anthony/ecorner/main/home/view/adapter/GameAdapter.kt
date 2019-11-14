@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.home.reponse.Game
+import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
 import com.bumptech.glide.Glide
 
 class GameAdapter(private var context: Context) : RecyclerView.Adapter<GameAdapter.CardViewHolder>() {
@@ -46,6 +47,9 @@ class GameAdapter(private var context: Context) : RecyclerView.Adapter<GameAdapt
         }
         holder. descriptionLabel.text = data.name
         holder. priceLabel.text = String.format(context.getString(R.string.amount),data.rent_amount.toString())
+        setItemClick?.let {itemClick->
+            holder.itemView.setOnClickListener { itemClick.onClick(data.id) }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -64,5 +68,12 @@ class GameAdapter(private var context: Context) : RecyclerView.Adapter<GameAdapt
             descriptionLabel = itemView.findViewById(R.id.descriptionLabel)
             priceLabel = itemView.findViewById(R.id.priceLabel)
         }
+    }
+    private var setItemClick: SetItemClick? = null
+    interface SetItemClick {
+        fun onClick(id:Int)
+    }
+    fun setOnItemClick(setItemClick: SetItemClick) {
+        this.setItemClick = setItemClick
     }
 }

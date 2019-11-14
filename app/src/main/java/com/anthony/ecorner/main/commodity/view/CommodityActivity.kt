@@ -39,6 +39,11 @@ class CommodityActivity : BaseActivity() {
 
         initView()
         initViewModel()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         loadingDialog.show(supportFragmentManager,loadingDialog.tag)
         viewModel.getUniqueCommodity(type,1,100)
     }
