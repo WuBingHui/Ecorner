@@ -1,9 +1,5 @@
 package com.anthony.ecorner.main.main.view
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -15,15 +11,16 @@ import com.anthony.ecorner.main.home.view.HomeFragment
 import com.anthony.ecorner.main.main.adapter.ViewPagerFragmentStateAdapter
 import com.anthony.ecorner.main.message.view.MessageFragment
 import com.anthony.ecorner.main.personal.view.PersonalFragment
-import com.anthony.ecorner.main.update.view.UpdateFragment
+import com.anthony.ecorner.main.update.view.UploadFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
+
+
 
 
 class MainActivity : BaseActivity(){
     private var exitTime: Long = 0
-
+   private val fragmentList = ArrayList<Fragment>()
+    private  var viewPagerFragmentStateAdapter:ViewPagerFragmentStateAdapter? = null
     companion object{
         val activity = this
     }
@@ -40,16 +37,16 @@ class MainActivity : BaseActivity(){
     }
 
     enum class CurrentPages(val value: Int) {
-        HOME(0), UPDATE(1), MESSAGE(2), PERSONAL(3)
+        HOME(0), UPLOAD(1), MESSAGE(2), PERSONAL(3)
     }
 
 
     private fun initView() {
 
-        val fragmentList = ArrayList<Fragment>()
+
 
         fragmentList.add(HomeFragment())
-        fragmentList.add(UpdateFragment())
+        fragmentList.add(UploadFragment())
         fragmentList.add(MessageFragment())
         fragmentList.add(PersonalFragment())
         initViewPager(fragmentList)
@@ -57,11 +54,11 @@ class MainActivity : BaseActivity(){
 
     private fun initViewPager(fragmentList: ArrayList<Fragment>) {
 
-        val viewPagerFragmentStateAdapter = ViewPagerFragmentStateAdapter(this)
+         viewPagerFragmentStateAdapter = ViewPagerFragmentStateAdapter(this)
 
         viewPager.adapter = viewPagerFragmentStateAdapter
 
-        viewPagerFragmentStateAdapter.setFragments(fragmentList)
+        viewPagerFragmentStateAdapter?.setFragments(fragmentList)
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
@@ -92,7 +89,7 @@ class MainActivity : BaseActivity(){
                     true
                 }
                 R.id.update -> {
-                    viewPager.currentItem = CurrentPages.UPDATE.value
+                    viewPager.currentItem = CurrentPages.UPLOAD.value
                     true
                 }
                 R.id.message -> {
@@ -117,6 +114,7 @@ class MainActivity : BaseActivity(){
 
         }
     }
+
 
 }
 

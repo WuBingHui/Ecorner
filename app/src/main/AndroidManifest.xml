@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 粗略定位授權 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 精細定位授權 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".EcornerApplication"
@@ -17,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".main.commodity.view.CommodityDetailActivity"></activity>
+        <activity android:name=".main.my_rent.view.ReplyApplicationActivity"></activity>
+        <activity android:name=".main.my_rent.view.MyRentActivity" />
+        <activity android:name=".main.commodity.view.CommodityDetailActivity" />
         <activity android:name=".main.commodity.view.CommodityActivity" />
         <activity android:name=".main.login.view.LoginActivity">
             <intent-filter>

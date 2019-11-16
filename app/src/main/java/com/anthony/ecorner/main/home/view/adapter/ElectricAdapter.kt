@@ -1,7 +1,6 @@
 package com.anthony.ecorner.main.home.view.adapter
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.home.reponse.Electric
-import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
 import com.bumptech.glide.Glide
 
 class ElectricAdapter(private var context: Context) : RecyclerView.Adapter<ElectricAdapter.CardViewHolder>() {

@@ -65,7 +65,8 @@ inline fun <reified T> createService(okHttpClient: OkHttpClient): T {
 
 private fun createResponse(chain: Interceptor.Chain, request: Request): Response {
     return chain.proceed(
-        request.newBuilder().header("Accept", "application/json")
+        request.newBuilder()
+            .header("Content-Type", "multipart/form-data")
             .method(request.method, request.body).build()
     )
 }

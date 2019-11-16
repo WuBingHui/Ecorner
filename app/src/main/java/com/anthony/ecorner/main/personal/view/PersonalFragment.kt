@@ -19,6 +19,7 @@ import com.anthony.ecorner.koin.Properties
 import com.anthony.ecorner.main.login.view.LoginActivity
 import com.anthony.ecorner.main.login.viewModel.LoginViewModel
 import com.anthony.ecorner.main.main.view.MainActivity
+import com.anthony.ecorner.main.my_rent.view.MyRentActivity
 import com.anthony.ecorner.main.personal.view.viewModel.PersonalViewModel
 import com.csnt.android_sport.main.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -85,7 +86,14 @@ class PersonalFragment : BaseFragment() {
         logout.setOnClickListener {
             viewModel.postLogout()
         }
+        rent.setOnClickListener {
+            context?.let{
+                val intent = Intent()
+                intent.setClass(it,MyRentActivity::class.java)
+                startActivity(intent)
+            }
 
+        }
     }
 
     private fun initViewModel() {

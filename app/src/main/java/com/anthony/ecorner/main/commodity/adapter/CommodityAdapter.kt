@@ -50,7 +50,7 @@ class CommodityAdapter(private var context: Context) :
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
 
-        context?.let {context->
+
             data[position].images?.let {
                 Glide.with(context)
                     .load(it[0])
@@ -66,7 +66,7 @@ class CommodityAdapter(private var context: Context) :
                 holder.itemView.setOnClickListener { itemClick.onClick(data[position].id) }
             }
 
-        }
+
     }
 
     override fun getItemCount(): Int {
