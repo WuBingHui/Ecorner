@@ -5,7 +5,9 @@ import com.anthony.ecorner.dto.Resource
 import com.anthony.ecorner.dto.Status
 import com.anthony.ecorner.dto.home.reponse.CommodityDto
 import com.anthony.ecorner.dto.message.response.MessageDto
+import com.anthony.ecorner.dto.my_rent.request.DeleteBo
 import com.anthony.ecorner.dto.my_rent.request.ReplyApplicantBo
+import com.anthony.ecorner.dto.my_rent.response.DeleteDto
 import com.anthony.ecorner.dto.my_rent.response.MyRentDto
 import com.anthony.ecorner.dto.my_rent.response.MyUploadDto
 import com.anthony.ecorner.dto.my_rent.response.ReplyApplicationDto
@@ -26,6 +28,8 @@ class MyRentViewModel(
     val onRentApply: MutableLiveData<Resource<MyRentDto>> by lazy { MutableLiveData<Resource<MyRentDto>>() }
 
     val onMyUpload: MutableLiveData<Resource<MyUploadDto>> by lazy { MutableLiveData<Resource<MyUploadDto>>() }
+
+    val onDelete: MutableLiveData<Resource<DeleteDto>> by lazy { MutableLiveData<Resource<DeleteDto>>() }
 
     val onReplyApplicant: MutableLiveData<Resource<ReplyApplicationDto>> by lazy { MutableLiveData<Resource<ReplyApplicationDto>>() }
 
@@ -74,6 +78,18 @@ class MyRentViewModel(
                     onReplyApplicant.value = Resource.error(dto.error, dto)
                 }
             }, { t: Throwable? -> onReplyApplicant.value = Resource.error(t?.message, null) }
+        ).addTo(compositeDisposable)
+    }
+
+    fun postDelete(deleteBo : DeleteBo) {
+        myRentModel.postDelete(deleteBo).ioToUi().subscribe(
+                { dto ->
+                    if (dto.result == Status.SUCCESS.value) {
+                        onDelete.value = Resource.success(dto)
+                    } else {
+                        onDelete.value = Resource.error(dto.error, dto)
+                    }
+                }, { t: Throwable? -> onDelete.value = Resource.error(t?.message, null) }
         ).addTo(compositeDisposable)
     }
 

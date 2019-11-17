@@ -57,9 +57,9 @@ class ReplyApplicationActivity : BaseActivity() {
         order?.let {
             applyTimeLabel.text = "${it.rent_at_begin.substring(0,10)} - ${it.rent_at_end.substring(0,10)}"
             applyLabel.text = it.applicant.name
-            payLabel.text = "貨到付款"
-            sendLabel.text = "超商店到店"
-            remarkLabel.text = "幫我快速送達"
+            payLabel.text = "$it.payment  ${getPaymentContent(it)}"
+            sendLabel.text = "$it.shipping  ${getShippingContent(it)}"
+            remarkLabel.text = it.description
             commodityNameLabel.text =it.product.name
             commodityAmountLabel.text =it.product.description
             Glide.with(this)
@@ -85,8 +85,30 @@ class ReplyApplicationActivity : BaseActivity() {
             }
             loadingFragment.dismiss()
         })
-
-
     }
+
+    private fun getPaymentContent(order:Order):String{
+        if(order.bank_account.isNotEmpty()){
+            return order.bank_account
+        }
+        if(order.delivery_info.isNotEmpty()){
+            return order.delivery_info
+        }
+        return ""
+    }
+
+    private fun getShippingContent(order:Order):String{
+        if(order.trading_location.isNotEmpty()){
+            return order.trading_location
+        }
+        if(order.store_number.isNotEmpty()){
+            return order.store_number
+        }
+        if(order.shipping_address.isNotEmpty()){
+            return order.shipping_address
+        }
+        return ""
+    }
+
 
 }

@@ -25,6 +25,8 @@ class MyRentAdapter(private var context: Context) :
     private var data = listOf<Any>()
     private var type = Type.APPLICANT.value
     private var setItemClick: SetItemClick? = null
+    private var setItemLongClick: SetItemLongClick? = null
+
 
     fun setData(data: List<Any>,type:String) {
         this.type =type
@@ -35,6 +37,10 @@ class MyRentAdapter(private var context: Context) :
     interface SetItemClick {
 
         fun onClick(dto:Any,type:String)
+    }
+    interface SetItemLongClick {
+
+        fun onClick(dto:ProductX,type:String)
     }
 
     override fun onCreateViewHolder(
@@ -70,6 +76,11 @@ class MyRentAdapter(private var context: Context) :
                 setItemClick?.let { itemClick ->
                     holder.itemView.setOnClickListener { itemClick.onClick(data,type) }
                 }
+                setItemLongClick?.let { itemClick->
+                    holder.itemView.setOnLongClickListener { itemClick.onClick(data,type)
+                    false
+                    }
+                }
             }else{
                 val data = data[position] as Order
                 Glide.with(context)
@@ -104,5 +115,9 @@ class MyRentAdapter(private var context: Context) :
 
     fun setOnItemClick(setItemClick: SetItemClick) {
         this.setItemClick = setItemClick
+    }
+
+    fun setOnItemLongClick(setItemLongClick: SetItemLongClick) {
+        this.setItemLongClick = setItemLongClick
     }
 }

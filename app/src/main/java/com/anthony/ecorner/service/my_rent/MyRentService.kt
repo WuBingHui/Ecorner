@@ -2,7 +2,9 @@ package com.anthony.ecorner.service.my_rent
 
 import com.anthony.ecorner.dto.home.reponse.CommodityDto
 import com.anthony.ecorner.dto.message.response.MessageDto
+import com.anthony.ecorner.dto.my_rent.request.DeleteBo
 import com.anthony.ecorner.dto.my_rent.request.ReplyApplicantBo
+import com.anthony.ecorner.dto.my_rent.response.DeleteDto
 import com.anthony.ecorner.dto.my_rent.response.MyRentDto
 import com.anthony.ecorner.dto.my_rent.response.MyUploadDto
 import com.anthony.ecorner.dto.my_rent.response.ReplyApplicationDto
@@ -38,5 +40,11 @@ interface MyRentService{
      */
     @POST("api/order/reply")
     fun postReplyApplicant(@Body replyApplicantBo : ReplyApplicantBo): Single<ReplyApplicationDto>
+
+    /**
+     *回覆 租賃請求
+     */
+    @POST("api/product/delete")
+    fun postDelete(@Body deleteBo : DeleteBo): Single<DeleteDto>
 
 }

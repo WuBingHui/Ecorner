@@ -1,5 +1,6 @@
 package com.anthony.ecorner.model.my_rent
 
+import com.anthony.ecorner.dto.my_rent.request.DeleteBo
 import com.anthony.ecorner.dto.my_rent.request.ReplyApplicantBo
 import com.anthony.ecorner.service.message.MessageService
 import com.anthony.ecorner.service.my_rent.MyRentService
@@ -19,6 +20,9 @@ class MyRentModel(val service: MyRentService) {
 
     fun postReplyApplicant(replyApplicantBo: ReplyApplicantBo) =
         service.postReplyApplicant(replyApplicantBo).ioToUi()
+
+    fun postDelete(deleteBo : DeleteBo) =
+            service.postDelete(deleteBo).ioToUi()
 
 
 }

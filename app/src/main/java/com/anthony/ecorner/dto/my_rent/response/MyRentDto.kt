@@ -1,20 +1,28 @@
 package com.anthony.ecorner.dto.my_rent.response
 
+
 data class MyRentDto(
-    val error:String,
+    val error: String,
     val order: List<Order>,
     val result: Boolean
 )
 
 data class Order(
     val applicant: Applicant,
+    val bank_account: String,
+    val delivery_info: String,
     val description: String,
     val id: Int,
     val owner: Owner,
+    val payment: String,
     val product: Product,
     val rent_at_begin: String,
     val rent_at_end: String,
-    val status: Int
+    val shipping: String,
+    val shipping_address: String,
+    val status: Int,
+    val store_number: String,
+    val trading_location: String
 )
 
 data class Applicant(

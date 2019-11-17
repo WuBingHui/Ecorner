@@ -3,10 +3,13 @@ package com.anthony.ecorner.main.my_rent.view
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.dto.commodity.request.ApplyCommodityBo
+import com.anthony.ecorner.dto.my_rent.request.DeleteBo
 import com.anthony.ecorner.dto.my_rent.response.Order
 import com.anthony.ecorner.dto.my_rent.response.ProductX
 import com.anthony.ecorner.main.base.BaseActivity
@@ -15,6 +18,7 @@ import com.anthony.ecorner.main.my_rent.adapter.MyRentAdapter
 import com.anthony.ecorner.main.my_rent.viewmodel.MyRentViewModel
 import com.anthony.ecorner.widget.CustomLoadingDialog
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_commodity_detail.*
 import kotlinx.android.synthetic.main.activity_my_rent.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -63,6 +67,14 @@ class MyRentActivity : BaseActivity() {
                         intent.setClass(this@MyRentActivity, CommodityDetailActivity::class.java)
                         startActivity(intent)
                     }
+                }
+            }
+        })
+
+        myRentAdapter!!.setOnItemLongClick(object:MyRentAdapter.SetItemLongClick{
+            override fun onClick(dto: ProductX,type:String) {
+                when (type) {
+                    MyRentAdapter.Type.UPLOAD.value -> delete(dto.id)
                 }
 
             }
@@ -148,5 +160,32 @@ class MyRentActivity : BaseActivity() {
             loadingDialog.dismiss()
         })
 
+        viewModel.onDelete.observe(this, Observer { dto ->
+            when (dto.status) {
+                Status.SUCCESS -> {
+                    dto.data?.let {
+                       viewModel.getMyUpload()
+                    }
+                }
+                Status.FAILED -> {
+                    Toast.makeText(this, dto.data?.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+            loadingDialog.dismiss()
+        })
+    }
+
+    private fun delete(id:Int){
+
+        AlertDialog.Builder(this)
+                .setMessage("確定要下架?")
+                .setTitle("下架")
+                .setPositiveButton("下架") { _, _ ->
+                    loadingDialog.show(supportFragmentManager, loadingDialog.tag)
+                    viewModel.postDelete(DeleteBo(id))
+                }
+                .setNeutralButton("取消", null)
+                .create()
+                .show()
     }
 }

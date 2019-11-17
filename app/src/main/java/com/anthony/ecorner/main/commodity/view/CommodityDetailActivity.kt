@@ -23,6 +23,15 @@ class CommodityDetailActivity : BaseActivity() {
 
     private val viewModel by viewModel<CommodityViewModel>()
 
+    private var payment = ""
+    private var shipping = ""
+    private var trading_location = ""
+    private var store_number = ""
+    private var shipping_address = ""
+    private var delivery_info = ""
+    private var bank_account = ""
+
+
     enum class SendMethod {
         SELF_GET,
         SUPER_COMMERCIA,
@@ -35,7 +44,7 @@ class CommodityDetailActivity : BaseActivity() {
     }
 
     private var id = 0
-    private var startTime =1
+    private var startTime = 1
     private var endTime = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +80,8 @@ class CommodityDetailActivity : BaseActivity() {
 
         startTimeLabel.setOnClickListener {
             val dataPickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                startTime = "$year${monthOfYear+1}$dayOfMonth".toInt()
-                startTimeLabel.text ="$year-${monthOfYear+1}-$dayOfMonth"
+                startTime = "$year${monthOfYear + 1}$dayOfMonth".toInt()
+                startTimeLabel.text = "$year-${monthOfYear + 1}-$dayOfMonth"
             }, year, month, day)
 
             dataPickerDialog.show()
@@ -80,23 +89,33 @@ class CommodityDetailActivity : BaseActivity() {
         endTimeLabel.setOnClickListener {
 
             val dataPickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                endTime = "$year${monthOfYear+1}$dayOfMonth".toInt()
-                endTimeLabel.text ="$year-${monthOfYear+1}-$dayOfMonth"
+                endTime = "$year${monthOfYear + 1}$dayOfMonth".toInt()
+                endTimeLabel.text = "$year-${monthOfYear + 1}-$dayOfMonth"
             }, year, month, day)
 
             dataPickerDialog.show()
         }
 
         rentBtn.setOnClickListener {
-            if(startTimeLabel.text.isEmpty() || endTimeLabel.text.isEmpty()){
-                Toast.makeText(this,"請選擇時間!", Toast.LENGTH_SHORT).show()
+            if (startTimeLabel.text.isEmpty() || endTimeLabel.text.isEmpty()) {
+                Toast.makeText(this, "請選擇時間!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if(startTime>endTime){
-                Toast.makeText(this,"開始時間不可大於結束時間!", Toast.LENGTH_SHORT).show()
+            if (startTime > endTime) {
+                Toast.makeText(this, "開始時間不可大於結束時間!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            showConfirmAlerDialog() }
+            if (shipping.isEmpty()) {
+                Toast.makeText(this, "請選擇寄送方式", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (payment.isEmpty()) {
+                Toast.makeText(this, "請選擇付款方式", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            showConfirmAlerDialog()
+        }
     }
 
 
@@ -107,12 +126,17 @@ class CommodityDetailActivity : BaseActivity() {
 
         when (sendMethod) {
             SendMethod.SELF_GET -> {
+                shipping = "自提自取"
+                trading_location = selfGetEditText.text.toString()
                 selfGetRadioBtn.isChecked = true
                 selfGetEditText.visibility = View.VISIBLE
                 superCommercialEditText.visibility = View.GONE
                 homeDeliveryEditText.visibility = View.GONE
             }
             SendMethod.HOME_DELIVERY -> {
+                shipping = "超商店到店"
+                store_number = superCommercialEditText.text.toString()
+
                 homeDeliveryRadioBtn.isChecked = true
 
                 selfGetEditText.visibility = View.GONE
@@ -120,6 +144,9 @@ class CommodityDetailActivity : BaseActivity() {
                 homeDeliveryEditText.visibility = View.VISIBLE
             }
             SendMethod.SUPER_COMMERCIA -> {
+                shipping = "宅配"
+                shipping_address = homeDeliveryEditText.text.toString()
+
                 superCommercialRadioBtn.isChecked = true
                 selfGetEditText.visibility = View.GONE
                 superCommercialEditText.visibility = View.VISIBLE
@@ -134,11 +161,15 @@ class CommodityDetailActivity : BaseActivity() {
 
         when (payMethod) {
             PayMethod.CASH_ON_DELIVERY -> {
+                payment = "貨到付款"
+                delivery_info = cashOnDeliveryEditText.text.toString()
                 cashOnDeliveryRadioBtn.isChecked = true
                 cashOnDeliveryEditText.visibility = View.VISIBLE
                 transferEditText.visibility = View.GONE
             }
             PayMethod.TRANSFER -> {
+                payment = "轉帳"
+                bank_account = transferEditText.text.toString()
                 transferRadioBtn.isChecked = true
                 cashOnDeliveryEditText.visibility = View.GONE
                 transferEditText.visibility = View.VISIBLE
@@ -159,9 +190,9 @@ class CommodityDetailActivity : BaseActivity() {
                         }
                         commodityTitleLabel.text = it.name
                         amountLabel.text =
-                            String.format(getString(R.string.amount), it.rent_amount.toString())
+                                String.format(getString(R.string.amount), it.rent_amount.toString())
                         depositLabel.text =
-                            String.format(getString(R.string.amount), it.deposit_amount.toString())
+                                String.format(getString(R.string.amount), it.deposit_amount.toString())
                         descriptionLabel.text = it.description
                         rentAddressLabel.text = it.address
                     }
@@ -188,14 +219,25 @@ class CommodityDetailActivity : BaseActivity() {
 
     private fun showConfirmAlerDialog() {
         AlertDialog.Builder(this)
-            .setMessage(descriptionLabel.text)
-            .setTitle(commodityTitleLabel.text)
-            .setPositiveButton("申請") { _, _ ->
-                loadingDialog.show(supportFragmentManager,loadingDialog.tag)
-                viewModel.postApply(ApplyCommodityBo(id,startTimeLabel.text.toString(),endTimeLabel.text.toString()))
-            }
-            .setNeutralButton("取消", null)
-            .create()
-            .show()
+                .setMessage(descriptionLabel.text)
+                .setTitle(commodityTitleLabel.text)
+                .setPositiveButton("申請") { _, _ ->
+                    loadingDialog.show(supportFragmentManager, loadingDialog.tag)
+                    viewModel.postApply(ApplyCommodityBo(id,
+                            startTimeLabel.text.toString(),
+                            endTimeLabel.text.toString(),
+                            payment,
+                            shipping,
+                            messageEditText.text.toString(),
+                            trading_location,
+                            store_number,
+                            shipping_address,
+                            delivery_info,
+                            bank_account))
+
+                }
+                .setNeutralButton("取消", null)
+                .create()
+                .show()
     }
 }
