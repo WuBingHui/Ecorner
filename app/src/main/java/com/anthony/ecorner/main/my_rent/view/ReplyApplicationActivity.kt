@@ -57,8 +57,8 @@ class ReplyApplicationActivity : BaseActivity() {
         order?.let {
             applyTimeLabel.text = "${it.rent_at_begin.substring(0,10)} - ${it.rent_at_end.substring(0,10)}"
             applyLabel.text = it.applicant.name
-            payLabel.text = "$it.payment  ${getPaymentContent(it)}"
-            sendLabel.text = "$it.shipping  ${getShippingContent(it)}"
+            payLabel.text = "${it.payment}  ${getPaymentContent(it)}"
+            sendLabel.text = "${it.shipping}  ${getShippingContent(it)}"
             remarkLabel.text = it.description
             commodityNameLabel.text =it.product.name
             commodityAmountLabel.text =it.product.description
