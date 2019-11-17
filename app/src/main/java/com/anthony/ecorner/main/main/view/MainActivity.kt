@@ -20,9 +20,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity(){
     private var exitTime: Long = 0
    private val fragmentList = ArrayList<Fragment>()
-    private  var viewPagerFragmentStateAdapter:ViewPagerFragmentStateAdapter? = null
+
     companion object{
         val activity = this
+          var viewPagerFragmentStateAdapter:ViewPagerFragmentStateAdapter? = null
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +59,7 @@ class MainActivity : BaseActivity(){
          viewPagerFragmentStateAdapter = ViewPagerFragmentStateAdapter(this)
 
         viewPager.adapter = viewPagerFragmentStateAdapter
+
 
         viewPagerFragmentStateAdapter?.setFragments(fragmentList)
 
@@ -114,6 +117,7 @@ class MainActivity : BaseActivity(){
 
         }
     }
+
 
 
 }

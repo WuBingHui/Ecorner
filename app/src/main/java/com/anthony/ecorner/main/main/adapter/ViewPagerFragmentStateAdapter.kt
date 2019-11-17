@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.anthony.ecorner.main.main.view.MainActivity
 
 class ViewPagerFragmentStateAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity){
 
@@ -15,8 +16,11 @@ class ViewPagerFragmentStateAdapter(fragmentActivity: FragmentActivity) : Fragme
     fun  setFragments(fragmentList:ArrayList<Fragment>){
 
         this.fragmentList = fragmentList
-
         notifyDataSetChanged()
+    }
+
+    fun refreshPage( Pposition: MainActivity.CurrentPages){
+        notifyItemChanged(Pposition.value)
     }
 
     override fun getItemCount(): Int {

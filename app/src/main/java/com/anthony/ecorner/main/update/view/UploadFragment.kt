@@ -33,10 +33,13 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.anthony.ecorner.R
 import com.anthony.ecorner.main.home.view.HomeFragment
+import com.anthony.ecorner.untils.UriPathUtils
+import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import kotlin.math.roundToInt
 
 
 /**
@@ -88,8 +91,8 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_update, container, false)
         return view
@@ -159,17 +162,17 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
 
     private fun checkPermission() {
         if (EasyPermissions.hasPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE) &&
-            EasyPermissions.hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                EasyPermissions.hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         ) {
 
             Toast.makeText(context, "已獲取檔案存取權限", Toast.LENGTH_SHORT).show()
         } else {
             EasyPermissions.requestPermissions(
-                this,
-                "應用需要訪問您的檔案,您需要在彈跳視窗允許使用",
-                LOCATION_REQUEST_CODE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                    this,
+                    "應用需要訪問您的檔案,您需要在彈跳視窗允許使用",
+                    LOCATION_REQUEST_CODE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
             )
         }
     }
@@ -177,7 +180,7 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
     private fun setImage(currentImageCode: Int) {
 
         if (!EasyPermissions.hasPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE) ||
-            !EasyPermissions.hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                !EasyPermissions.hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         ) {
             Toast.makeText(context, "無權限存取檔案，請至應用程式資訊允許檔案存取", Toast.LENGTH_SHORT).show()
             return
@@ -204,31 +207,29 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
                 val cr = it.contentResolver
                 try {
                     uri?.let {
-                        val bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri))
-                        val drawable = BitmapDrawable(bitmap)
                         context?.let {
-                            val file = File(getAbsolutePath(it, uri))
-                            fileList.add(file)
-//                            val requestBody =
-//                                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-//                            imageMap.put("images\"; filename=\"" + file.name, requestBody)
-                        }
 
-                        /* 將Bitmap設定到ImageView */
-                        when (requestCode) {
-                            ImageType.LEFT_IMAGE.value -> {
-                                leftImageView.background = drawable
-//                                imageByteArray[0] = Bitmap2Bytes(bitmap)
-                            }
-                            ImageType.MID_IMAGE.value -> {
-                                midImageView.background = drawable
-//                                imageByteArray[1] = Bitmap2Bytes(bitmap)
-                            }
-                            ImageType.RIGHT_IMAGE.value -> {
-                                rightImageView.background = drawable
-//                                imageByteArray[2] = Bitmap2Bytes(bitmap)
-                            }
-                            else -> {
+                            val bitmap = UriPathUtils.getRealPathFromUri(it, uri)?.let { it1 -> getSmallBitmap(it1) }
+                            val drawable = BitmapDrawable(bitmap)
+                            val file = File(UriPathUtils.getRealPathFromUri(it, uri))
+                            fileList.add(file)
+//
+                            /* 將Bitmap設定到ImageView */
+                            when (requestCode) {
+                                ImageType.LEFT_IMAGE.value -> {
+                                    leftImageView.background = drawable
+//
+                                }
+                                ImageType.MID_IMAGE.value -> {
+                                    midImageView.background = drawable
+//
+                                }
+                                ImageType.RIGHT_IMAGE.value -> {
+                                    rightImageView.background = drawable
+//
+                                }
+                                else -> {
+                                }
                             }
                         }
                     }
@@ -242,8 +243,8 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
         //觸摸的是EditText並且當前EditText可以滾動則將事件交給EditText處理；否則將事件交由其父類處理
         if (view.id == R.id.commodityDescriptionEditText && canVerticalScroll(
-                commodityDescriptionEditText
-            )
+                        commodityDescriptionEditText
+                )
         ) {
             view.parent.requestDisallowInterceptTouchEvent(true)
             if (motionEvent.action == MotionEvent.ACTION_UP) {
@@ -265,7 +266,7 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
         val scrollRange = editText.layout.height
         //控件實際顯示的高度
         val scrollExtent =
-            editText.height - editText.compoundPaddingTop - editText.compoundPaddingBottom
+                editText.height - editText.compoundPaddingTop - editText.compoundPaddingBottom
         //控件內容總高度與實際顯示高度的差值
         val scrollDifference = scrollRange - scrollExtent
 
@@ -346,7 +347,7 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
         partList = filesToMultipartBodyParts(fileList)
 
         viewModel.postUploaad(
-            params, partList!!
+                params, partList!!
         )
 
     }
@@ -357,13 +358,6 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
         return byteArrayOutputStream.toByteArray()
     }
 
-
-    private fun getAbsolutePath(context: Context, uri: Uri): String {
-        val localContentResolver = context.contentResolver
-        val localCursor = localContentResolver.query(uri, null, null, null, null)
-        localCursor!!.moveToFirst()
-        return localCursor.getString(localCursor.getColumnIndex("_data"))
-    }
 
     private fun convertToRequestBody(param: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), param)
@@ -388,9 +382,42 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
         commodityDepositEditText.setText("")
         commodityDescriptionEditText.setText("")
         commodityAddressEditText.setText("")
-        val drawable = ContextCompat.getDrawable(context!!,R.drawable.add_pic)
+        val drawable = ContextCompat.getDrawable(context!!, R.drawable.add_pic)
         leftImageView.background = drawable
         midImageView.background = drawable
         rightImageView.background = drawable
+        MainActivity.viewPagerFragmentStateAdapter?.refreshPage(MainActivity.CurrentPages.HOME)
     }
+
+    //計算圖片的縮放值
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        val height = options.outHeight;
+        val width = options.outWidth;
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+            val heightRatio = (height.toFloat() / reqHeight.toFloat()).roundToInt()
+            val widthRatio = (width.toFloat() / reqWidth.toFloat()).roundToInt()
+
+            inSampleSize = if (heightRatio < widthRatio) {
+                heightRatio
+            } else {
+                widthRatio
+            }
+        }
+        return inSampleSize
+    }
+
+    // 根據路徑獲得圖片並壓縮，返回bitmap用於顯示
+    fun getSmallBitmap(filePath: String): Bitmap {
+        val options: BitmapFactory.Options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(filePath, options)
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, 480, 480)
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false
+        return BitmapFactory.decodeFile(filePath, options)
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.anthony.ecorner.main.registered.view
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -74,6 +75,11 @@ class RegisteredActivity : BaseActivity() {
             checkAddress()
         ) {
             loadingDialog.show(supportFragmentManager,loadingDialog.tag)
+            Log.e("aaaaa",accountEditText.getText())
+            Log.e("aaaaa",passwordEditText.getText())
+            Log.e("aaaaa",nameEditText.getText())
+            Log.e("aaaaa",phoneEditText.getText())
+            Log.e("aaaaa",addressEditText.getText())
             viewModel.postRegistered(RegisteredBo(accountEditText.getText(),passwordEditText.getText(),nameEditText.getText(),phoneEditText.getText(),addressEditText.getText()))
 
         }
