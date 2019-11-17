@@ -14,6 +14,11 @@ class MyRentModel(val service: MyRentService) {
     fun getRentApply() =
         service.getRentApply().ioToUi()
 
+    fun getMyUpload() =
+            service.getMyUpload().ioToUi()
+
     fun postReplyApplicant(replyApplicantBo: ReplyApplicantBo) =
         service.postReplyApplicant(replyApplicantBo).ioToUi()
+
+
 }

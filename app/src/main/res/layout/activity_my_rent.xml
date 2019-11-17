@@ -30,6 +30,12 @@
             android:layout_height="wrap_content"
             android:text="我的租賃" />
 
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/myUploadTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的上傳" />
+
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView

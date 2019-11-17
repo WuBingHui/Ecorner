@@ -48,12 +48,13 @@ class MessageFragment : BaseFragment() {
         super.onResume()
         fragmentManager?.let {
             loadingFragment.show(it, loadingFragment.tag)
+            viewModel.getNotify()
         }
-        viewModel.getNotify()
+
     }
 
     override fun getData() {
-     
+
     }
 
     private fun initView(view: View) {

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.my_rent.response.Order
+import com.anthony.ecorner.dto.my_rent.response.ProductX
 import com.bumptech.glide.Glide
 
 class MyRentAdapter(private var context: Context) :
@@ -17,13 +18,15 @@ class MyRentAdapter(private var context: Context) :
 
     enum class Type(val value:String){
         OWNER("owner"),
-        APPLICANT("Applicant")
+        APPLICANT("applicant"),
+        UPLOAD("upload")
     }
 
-    private var data = listOf<Order>()
+    private var data = listOf<Any>()
     private var type = Type.APPLICANT.value
     private var setItemClick: SetItemClick? = null
-    fun setData(data: List<Order>,type:String) {
+
+    fun setData(data: List<Any>,type:String) {
         this.type =type
         this.data = data
         notifyDataSetChanged()
@@ -31,7 +34,7 @@ class MyRentAdapter(private var context: Context) :
 
     interface SetItemClick {
 
-        fun onClick(dto:Order)
+        fun onClick(dto:Any,type:String)
     }
 
     override fun onCreateViewHolder(
@@ -54,21 +57,36 @@ class MyRentAdapter(private var context: Context) :
 
         context?.let { context ->
 
-            val data = data[position]
+            if(type == Type.UPLOAD.value){
+                val data = data[position] as ProductX
+                Glide.with(context)
+                        .load(data.images[0])
+                        .placeholder(R.drawable.mobile)
+                        .into(holder.commodityImageView)
 
-            Glide.with(context)
-                .load(data.product.images[0])
-                .placeholder(R.drawable.mobile)
-                .into(holder.commodityImageView)
+                holder.commodityNameLabel.text = data.name
+                holder.commodityAmountLabel.text =
+                        "$ ${data.rent_amount}/日    押金: ${data.deposit_amount}"
+                setItemClick?.let { itemClick ->
+                    holder.itemView.setOnClickListener { itemClick.onClick(data,type) }
+                }
+            }else{
+                val data = data[position] as Order
+                Glide.with(context)
+                        .load(data.product.images[0])
+                        .placeholder(R.drawable.mobile)
+                        .into(holder.commodityImageView)
 
-            holder.commodityNameLabel.text = data.product.name
-            holder.commodityAmountLabel.text =
-                "$ ${data.product.rent_amount}/日    押金: ${data.product.deposit_amount}"
-            setItemClick?.let { itemClick ->
-                if(type == Type.APPLICANT.value){
-                    holder.itemView.setOnClickListener { itemClick.onClick(data) }
+                holder.commodityNameLabel.text = data.product.name
+                holder.commodityAmountLabel.text =
+                        "$ ${data.product.rent_amount}/日    押金: ${data.product.deposit_amount}"
+                setItemClick?.let { itemClick ->
+                    holder.itemView.setOnClickListener { itemClick.onClick(data,type) }
                 }
             }
+
+
+
 
         }
     }

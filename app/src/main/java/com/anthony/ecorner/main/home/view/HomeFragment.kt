@@ -78,8 +78,9 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
     override fun onResume() {
         super.onResume()
-        loadingDialog.show(fragmentManager!!, loadingDialog.tag)
-        viewModel.getCommodity()
+        fragmentManager?.let { loadingDialog.show(it, loadingDialog.tag)
+            viewModel.getCommodity()
+        }
     }
 
     override fun getData() {
@@ -351,6 +352,7 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
         context?.let {
             val mLocationProviderClient = LocationServices.getFusedLocationProviderClient(it)
+
             val locationRequest = LocationRequest()
             locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 //         設定更新速度
@@ -366,7 +368,9 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
                             1
                         )
                         val address: Address = addresses[0]
-                        cityLabel.text = address.adminArea.toString()
+                       if( cityLabel != null){
+                            cityLabel.text = address.adminArea.toString()
+                        }
                     }
                 },
                 null

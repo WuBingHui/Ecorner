@@ -4,6 +4,7 @@ import com.anthony.ecorner.dto.home.reponse.CommodityDto
 import com.anthony.ecorner.dto.message.response.MessageDto
 import com.anthony.ecorner.dto.my_rent.request.ReplyApplicantBo
 import com.anthony.ecorner.dto.my_rent.response.MyRentDto
+import com.anthony.ecorner.dto.my_rent.response.MyUploadDto
 import com.anthony.ecorner.dto.my_rent.response.ReplyApplicationDto
 import io.reactivex.Single
 import retrofit2.http.Body
@@ -25,6 +26,12 @@ interface MyRentService{
      */
     @GET("api/order/list/leases-request")
     fun getRentApply(): Single<MyRentDto>
+
+    /**
+     *我的上傳
+     */
+    @GET(" api/product/own")
+    fun getMyUpload(): Single<MyUploadDto>
 
     /**
      *回覆 租賃請求

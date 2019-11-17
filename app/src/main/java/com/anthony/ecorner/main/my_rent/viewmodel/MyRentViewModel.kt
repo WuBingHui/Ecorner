@@ -7,6 +7,7 @@ import com.anthony.ecorner.dto.home.reponse.CommodityDto
 import com.anthony.ecorner.dto.message.response.MessageDto
 import com.anthony.ecorner.dto.my_rent.request.ReplyApplicantBo
 import com.anthony.ecorner.dto.my_rent.response.MyRentDto
+import com.anthony.ecorner.dto.my_rent.response.MyUploadDto
 import com.anthony.ecorner.dto.my_rent.response.ReplyApplicationDto
 import com.anthony.ecorner.main.base.BaseViewModel
 import com.anthony.ecorner.model.home.HomeModel
@@ -23,6 +24,8 @@ class MyRentViewModel(
     val onMyRent: MutableLiveData<Resource<MyRentDto>> by lazy { MutableLiveData<Resource<MyRentDto>>() }
 
     val onRentApply: MutableLiveData<Resource<MyRentDto>> by lazy { MutableLiveData<Resource<MyRentDto>>() }
+
+    val onMyUpload: MutableLiveData<Resource<MyUploadDto>> by lazy { MutableLiveData<Resource<MyUploadDto>>() }
 
     val onReplyApplicant: MutableLiveData<Resource<ReplyApplicationDto>> by lazy { MutableLiveData<Resource<ReplyApplicationDto>>() }
 
@@ -47,6 +50,18 @@ class MyRentViewModel(
                     onRentApply.value = Resource.error(dto.error, dto)
                 }
             }, { t: Throwable? -> onRentApply.value = Resource.error(t?.message, null) }
+        ).addTo(compositeDisposable)
+    }
+
+    fun getMyUpload() {
+        myRentModel.getMyUpload().ioToUi().subscribe(
+                { dto ->
+                    if (dto.result == Status.SUCCESS.value) {
+                        onMyUpload.value = Resource.success(dto)
+                    } else {
+                        onMyUpload.value = Resource.error(dto.error, dto)
+                    }
+                }, { t: Throwable? -> onMyUpload.value = Resource.error(t?.message, null) }
         ).addTo(compositeDisposable)
     }
 
