@@ -127,7 +127,7 @@ class CommodityDetailActivity : BaseActivity() {
         when (sendMethod) {
             SendMethod.SELF_GET -> {
                 shipping = "自提自取"
-                trading_location = selfGetEditText.text.toString()
+
                 selfGetRadioBtn.isChecked = true
                 selfGetEditText.visibility = View.VISIBLE
                 superCommercialEditText.visibility = View.GONE
@@ -135,7 +135,6 @@ class CommodityDetailActivity : BaseActivity() {
             }
             SendMethod.HOME_DELIVERY -> {
                 shipping = "超商店到店"
-                store_number = superCommercialEditText.text.toString()
 
                 homeDeliveryRadioBtn.isChecked = true
 
@@ -145,7 +144,6 @@ class CommodityDetailActivity : BaseActivity() {
             }
             SendMethod.SUPER_COMMERCIA -> {
                 shipping = "宅配"
-                shipping_address = homeDeliveryEditText.text.toString()
 
                 superCommercialRadioBtn.isChecked = true
                 selfGetEditText.visibility = View.GONE
@@ -162,14 +160,14 @@ class CommodityDetailActivity : BaseActivity() {
         when (payMethod) {
             PayMethod.CASH_ON_DELIVERY -> {
                 payment = "貨到付款"
-                delivery_info = cashOnDeliveryEditText.text.toString()
+
                 cashOnDeliveryRadioBtn.isChecked = true
                 cashOnDeliveryEditText.visibility = View.VISIBLE
                 transferEditText.visibility = View.GONE
             }
             PayMethod.TRANSFER -> {
                 payment = "轉帳"
-                bank_account = transferEditText.text.toString()
+
                 transferRadioBtn.isChecked = true
                 cashOnDeliveryEditText.visibility = View.GONE
                 transferEditText.visibility = View.VISIBLE
@@ -229,11 +227,11 @@ class CommodityDetailActivity : BaseActivity() {
                             payment,
                             shipping,
                             messageEditText.text.toString(),
-                            trading_location,
-                            store_number,
-                            shipping_address,
-                            delivery_info,
-                            bank_account))
+                            selfGetEditText.text.toString(),
+                            superCommercialEditText.text.toString(),
+                            homeDeliveryEditText.text.toString(),
+                            cashOnDeliveryEditText.text.toString(),
+                            transferEditText.text.toString()))
 
                 }
                 .setNeutralButton("取消", null)
