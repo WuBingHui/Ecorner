@@ -47,8 +47,6 @@ import java.util.*
 
 class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
-
-
     private val loadingDialog = CustomLoadingDialog.newInstance()
     private val viewModel by viewModel<HomeViewModel>()
     private lateinit var childRecyclerView: RecyclerView
@@ -78,10 +76,14 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-
-    override fun getData() {
+    override fun onResume() {
+        super.onResume()
         loadingDialog.show(fragmentManager!!, loadingDialog.tag)
         viewModel.getCommodity()
+    }
+
+    override fun getData() {
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -210,7 +212,6 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             hospitalLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
             electricLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
             gameLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-
             childAdapter = ChildAdapter(it)
             travelAdapter = TravelAdapter(it)
             hospitalAdapter = HospitalAdapter(it)

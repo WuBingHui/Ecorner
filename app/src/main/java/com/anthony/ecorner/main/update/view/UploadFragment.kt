@@ -386,7 +386,6 @@ class UploadFragment : BaseFragment(), View.OnTouchListener, EasyPermissions.Per
         leftImageView.background = drawable
         midImageView.background = drawable
         rightImageView.background = drawable
-        MainActivity.viewPagerFragmentStateAdapter?.refreshPage(MainActivity.CurrentPages.HOME)
     }
 
     //計算圖片的縮放值
