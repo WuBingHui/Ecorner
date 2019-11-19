@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
-import com.anthony.ecorner.dto.commodity.request.ApplyCommodityBo
 import com.anthony.ecorner.dto.my_rent.request.DeleteBo
 import com.anthony.ecorner.dto.my_rent.response.Order
 import com.anthony.ecorner.dto.my_rent.response.ProductX
@@ -18,7 +17,6 @@ import com.anthony.ecorner.main.my_rent.adapter.MyRentAdapter
 import com.anthony.ecorner.main.my_rent.viewmodel.MyRentViewModel
 import com.anthony.ecorner.widget.CustomLoadingDialog
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_commodity_detail.*
 import kotlinx.android.synthetic.main.activity_my_rent.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

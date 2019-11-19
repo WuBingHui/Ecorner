@@ -41,15 +41,25 @@ fun createOkHttpClient(openInterceptor: Boolean = true): OkHttpClient {
 
 object Properties {
     private var id = -1
+    private var name = ""
+    private var username =""
 
     fun clearProperties() {
         this.id = -1
+        this.name =""
+        this.username =""
     }
 
     fun getId() = id
 
-    fun setToken(id: Int) {
+    fun getName()= name
+
+    fun getUsername()=username
+
+    fun setUserInfo(id: Int,name:String,username:String) {
         this.id = id
+        this.name =name
+        this.username = username
     }
 
 }

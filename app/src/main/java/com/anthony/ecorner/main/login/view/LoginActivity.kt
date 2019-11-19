@@ -12,7 +12,6 @@ import com.anthony.ecorner.extension.isEmailFormat
 import com.anthony.ecorner.koin.Properties
 import com.anthony.ecorner.main.main.view.MainActivity
 import com.anthony.ecorner.main.base.BaseActivity
-import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
 import com.anthony.ecorner.main.login.viewModel.LoginViewModel
 import com.anthony.ecorner.main.registered.view.RegisteredActivity
 import com.anthony.ecorner.widget.CustomLoadingDialog
@@ -89,7 +88,7 @@ class LoginActivity : BaseActivity() {
             loadingDialog.dismiss()
             when (dto.status) {
                 Status.SUCCESS -> {
-                    Properties.setToken(dto.data?.user!!.id)
+                    Properties.setUserInfo(dto.data?.user!!.id,dto.data?.user!!.name,dto.data?.user!!.username)
                     Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent()

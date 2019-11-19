@@ -44,6 +44,10 @@ class PersonalFragment : BaseFragment() {
     }
 
     private fun initView(view: View) {
+        
+        val nameLabel =view.findViewById<TextView>(R.id.nameLabel)
+
+        nameLabel.text =Properties.getName()
 
         val personal = view.findViewById<View>(R.id.personal)
         val collect = view.findViewById<View>(R.id.collect)
@@ -92,7 +96,13 @@ class PersonalFragment : BaseFragment() {
                 intent.setClass(it,MyRentActivity::class.java)
                 startActivity(intent)
             }
-
+        }
+        personal.setOnClickListener {
+            context?.let{
+                val intent = Intent()
+                intent.setClass(it,PersonalInfoActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

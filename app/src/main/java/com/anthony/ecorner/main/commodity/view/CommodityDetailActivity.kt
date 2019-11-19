@@ -170,7 +170,7 @@ class CommodityDetailActivity : BaseActivity() {
 
                 transferRadioBtn.isChecked = true
                 cashOnDeliveryEditText.visibility = View.GONE
-                transferEditText.visibility = View.VISIBLE
+                transferEditText.visibility = View.GONE
             }
 
         }
