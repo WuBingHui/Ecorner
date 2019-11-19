@@ -50,11 +50,11 @@ class PersonalViewModel(
         personalModel.postUpdateProfile(updateProfileBo).ioToUi().subscribe(
             { dto ->
                 if (dto.result == Status.SUCCESS.value) {
-                    onProfile.value = Resource.success(dto)
+                    onUpdateProfile.value = Resource.success(dto)
                 } else {
-                    onProfile.value = Resource.error(dto.error, dto)
+                    onUpdateProfile.value = Resource.error(dto.error, dto)
                 }
-            }, { t: Throwable? -> onProfile.value = Resource.error(t?.message, null) }
+            }, { t: Throwable? -> onUpdateProfile.value = Resource.error(t?.message, null) }
         ).addTo(compositeDisposable)
     }
 

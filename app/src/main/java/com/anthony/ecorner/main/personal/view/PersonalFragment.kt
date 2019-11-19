@@ -28,6 +28,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * A simple [Fragment] subclass.
  */
 class PersonalFragment : BaseFragment() {
+    private lateinit var  nameLabel:TextView
+
     override fun getData() {
     }
 
@@ -43,8 +45,13 @@ class PersonalFragment : BaseFragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        nameLabel.text =Properties.getName()
+    }
+
     private fun initView(view: View) {
-        
+
         val nameLabel =view.findViewById<TextView>(R.id.nameLabel)
 
         nameLabel.text =Properties.getName()

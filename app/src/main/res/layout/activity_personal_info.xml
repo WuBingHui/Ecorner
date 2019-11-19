@@ -206,7 +206,7 @@
     <TextView
         android:id="@+id/bankCodeLabel"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:gravity="center|start"
         android:padding="4dp"
