@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".main.personal.view.PersonalInfoActivity"></activity>
+        <activity android:name=".main.personal.view.AboutActivity"></activity>
+        <activity android:name=".main.personal.view.PersonalInfoActivity" />
         <activity android:name=".main.my_rent.view.ReplyApplicationActivity" />
         <activity android:name=".main.my_rent.view.MyRentActivity" />
         <activity android:name=".main.commodity.view.CommodityDetailActivity" />

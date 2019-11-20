@@ -111,6 +111,13 @@ class PersonalFragment : BaseFragment() {
                 startActivity(intent)
             }
         }
+        about.setOnClickListener {
+            context?.let{
+                val intent = Intent()
+                intent.setClass(it,AboutActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun initViewModel() {
