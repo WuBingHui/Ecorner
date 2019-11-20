@@ -69,6 +69,7 @@ class PersonalInfoActivity : BaseActivity() {
             when (dto.status) {
                 Status.SUCCESS -> {
                     Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show()
+                    Properties.setName(nickNameEditText.text.toString())
                     viewmodel.postProfile(ProfileBo(Properties.getId()))
                 }
                 Status.FAILED -> {

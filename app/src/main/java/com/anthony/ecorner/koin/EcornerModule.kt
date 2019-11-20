@@ -56,6 +56,10 @@ object Properties {
 
     fun getUsername()=username
 
+    fun setName(name:String){
+        this.name =name
+    }
+
     fun setUserInfo(id: Int,name:String,username:String) {
         this.id = id
         this.name =name
