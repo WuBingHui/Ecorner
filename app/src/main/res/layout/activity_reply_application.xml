@@ -97,6 +97,7 @@
         android:text="無"
         android:textColor="@color/md_black_1000"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/commodityAmountLabel"
         app:layout_constraintStart_toEndOf="@+id/cardView4"
         app:layout_constraintTop_toTopOf="@+id/cardView4" />
@@ -123,6 +124,7 @@
         android:text="申請人："
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/cardView4"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -134,6 +136,7 @@
         android:text="申請時間："
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/cardView4"
         app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
@@ -145,6 +148,7 @@
         android:text="付款方式："
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -156,6 +160,7 @@
         android:text="寄送方式："
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -167,6 +172,7 @@
         android:text="留言："
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 

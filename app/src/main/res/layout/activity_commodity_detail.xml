@@ -57,6 +57,7 @@
                 android:text="@string/apply_time"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rentAddressLabel" />
 
@@ -70,6 +71,7 @@
                 android:text="@string/commodity_address"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descriptionLabel" />
 
@@ -83,6 +85,7 @@
                 android:text="@string/send_method"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/startTimeLabel" />
 
@@ -97,6 +100,7 @@
                 android:text="@string/commodity_description"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/amountLabel" />
 
@@ -108,6 +112,7 @@
                 android:text="@string/rent_deposit"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
                 app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -123,7 +128,8 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/textView6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/amountLabel"
@@ -333,6 +339,7 @@
                 android:text="@string/pay_method"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/homeDeliveryRadioBtn" />
 
@@ -450,6 +457,7 @@
         android:text="素素色大學T素色大學"
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />

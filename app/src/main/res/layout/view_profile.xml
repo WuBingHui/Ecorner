@@ -22,8 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        tools:text="我的設定"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/profileImg"
         app:layout_constraintStart_toStartOf="@+id/profileImg"
-        app:layout_constraintTop_toBottomOf="@+id/profileImg" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImg"
+        tools:text="我的設定" />
 </androidx.constraintlayout.widget.ConstraintLayout>
