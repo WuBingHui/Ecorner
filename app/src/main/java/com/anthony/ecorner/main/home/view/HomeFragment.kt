@@ -367,9 +367,15 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
                             locationresult.lastLocation.longitude,
                             1
                         )
-                        val address: Address = addresses[0]
-                       if( cityLabel != null){
-                            cityLabel.text = address.adminArea.toString()
+                        if(addresses.isNotEmpty()){
+                            val address: Address = addresses[0]
+                            address.adminArea?.let {
+                                cityLabel.text = it
+                            }?: run {
+                                cityLabel.text = address.subAdminArea
+                            }
+                        }else{
+                            cityLabel.text = "無法定位"
                         }
                     }
                 },
