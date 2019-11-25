@@ -4,7 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.anthony.ecorner.dto.Resource
 import com.anthony.ecorner.dto.Status
 import com.anthony.ecorner.dto.commodity.request.ApplyCommodityBo
+import com.anthony.ecorner.dto.commodity.request.CollectBo
 import com.anthony.ecorner.dto.commodity.response.ApplyCommodityDto
+import com.anthony.ecorner.dto.commodity.response.CollectDto
 import com.anthony.ecorner.dto.commodity.response.CommodityDetailDto
 import com.anthony.ecorner.dto.commodity.response.UniqueCommodityDto
 import com.anthony.ecorner.dto.home.reponse.CommodityDto
@@ -27,6 +29,8 @@ class CommodityViewModel(
     val onCommodityDetail: MutableLiveData<Resource<CommodityDetailDto>> by lazy { MutableLiveData<Resource<CommodityDetailDto>>() }
 
     val onApplyCommodity: MutableLiveData<Resource<ApplyCommodityDto>> by lazy { MutableLiveData<Resource<ApplyCommodityDto>>() }
+
+    val onCollect: MutableLiveData<Resource<CollectDto>> by lazy { MutableLiveData<Resource<CollectDto>>() }
 
     fun getCommodity() {
         homeModel.getCommodity().ioToUi().subscribe(
@@ -73,6 +77,18 @@ class CommodityViewModel(
                     onApplyCommodity.value = Resource.error(dto.error, dto)
                 }
             }, { t: Throwable? -> onApplyCommodity.value = Resource.error(t?.message, null) }
+        ).addTo(compositeDisposable)
+    }
+
+    fun postCollect(collectBo: CollectBo) {
+        commodityModel.postCollect(collectBo).ioToUi().subscribe(
+            { dto ->
+                if (dto.result == Status.SUCCESS.value) {
+                    onCollect.value = Resource.success(dto)
+                } else {
+                    onCollect.value = Resource.error(dto.error, dto)
+                }
+            }, { t: Throwable? -> onCollect.value = Resource.error(t?.message, null) }
         ).addTo(compositeDisposable)
     }
 }

@@ -28,6 +28,7 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
 import com.anthony.ecorner.main.message.view.viewModel.MessageViewModel
@@ -68,6 +69,30 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         const val LOCATION_REQUEST_CODE = 1000
     }
 
+    enum class CityType(val value: String) {
+        NEW_CITY_TAIPEI("新北市"),
+        HUALIEN("花蓮縣"),
+        KAOHSUNG("高雄市"),
+        JILONG("基隆市"),
+        TAOYUAN("桃園市"),
+        TAIZHONG("台中市"),
+        YUNLIN("雲林縣"),
+        CHIAYI_XIAN("嘉義縣"),
+        CHIAYI("嘉義市"),
+        TAINAN("台南市"),
+        PINTUNG("屏東縣"),
+        TAIPEI("台北市"),
+        NANTOU("南投縣"),
+        ZANGHUA("彰化縣"),
+        YILAN("宜蘭縣"),
+        TIATONG("台東縣"),
+        MIAOLI("苗栗縣"),
+        XINZHU("新竹市"),
+        XINZHU_XIAN("新竹縣"),
+        JINMEN("金門縣"),
+        LIANJIANG("連江縣"),
+        PENGHU("澎湖縣")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,7 +103,8 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
     override fun onResume() {
         super.onResume()
-        fragmentManager?.let { loadingDialog.show(it, loadingDialog.tag)
+        fragmentManager?.let {
+            loadingDialog.show(it, loadingDialog.tag)
             viewModel.getCommodity()
         }
     }
@@ -231,27 +257,27 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             electricRecyclerView.adapter = electricAdapter
             gameRecyclerView.adapter = gameAdapter
 
-            childAdapter.setOnItemClick(object :ChildAdapter.SetItemClick{
+            childAdapter.setOnItemClick(object : ChildAdapter.SetItemClick {
                 override fun onClick(id: Int) {
                     goCommodityDetailPage(id)
                 }
             })
-            travelAdapter.setOnItemClick(object :TravelAdapter.SetItemClick{
+            travelAdapter.setOnItemClick(object : TravelAdapter.SetItemClick {
                 override fun onClick(id: Int) {
                     goCommodityDetailPage(id)
                 }
             })
-            hospitalAdapter.setOnItemClick(object :HospitalAdapter.SetItemClick{
+            hospitalAdapter.setOnItemClick(object : HospitalAdapter.SetItemClick {
                 override fun onClick(id: Int) {
                     goCommodityDetailPage(id)
                 }
             })
-            electricAdapter.setOnItemClick(object :ElectricAdapter.SetItemClick{
+            electricAdapter.setOnItemClick(object : ElectricAdapter.SetItemClick {
                 override fun onClick(id: Int) {
                     goCommodityDetailPage(id)
                 }
             })
-            gameAdapter.setOnItemClick(object :GameAdapter.SetItemClick{
+            gameAdapter.setOnItemClick(object : GameAdapter.SetItemClick {
                 override fun onClick(id: Int) {
                     goCommodityDetailPage(id)
                 }
@@ -367,14 +393,15 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
                             locationresult.lastLocation.longitude,
                             1
                         )
-                        if(addresses.isNotEmpty()){
+                        if (addresses.isNotEmpty()) {
                             val address: Address = addresses[0]
                             address.adminArea?.let {
                                 cityLabel.text = it
-                            }?: run {
+                            } ?: run {
                                 cityLabel.text = address.subAdminArea
                             }
-                        }else{
+                            setCityView()
+                        } else {
                             cityLabel.text = "無法定位"
                         }
                     }
@@ -384,14 +411,93 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         }
 
     }
-    private fun goCommodityDetailPage(id:Int){
+
+    private fun goCommodityDetailPage(id: Int) {
         context?.let {
             val intent = Intent()
-            intent.putExtra("ID",id)
+            intent.putExtra("ID", id)
             intent.setClass(it, CommodityDetailActivity::class.java)
             startActivity(intent)
         }
     }
 
+    private fun setCityView() {
+        val city = cityLabel.text
+        if (!city.isNullOrEmpty()) {
+            context?.let {
+                var bg = ContextCompat.getDrawable(it, R.drawable.taipei)
+                when (city) {
+                    CityType.NEW_CITY_TAIPEI.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.xinbei)
+                    }
+                    CityType.HUALIEN.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.hualien)
+                    }
+                    CityType.KAOHSUNG.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.kaohsung)
+                    }
+                    CityType.JILONG.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.jilong)
+                    }
+                    CityType.TAOYUAN.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.taoyuan)
+                    }
+                    CityType.TAIZHONG.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.taizhong)
+                    }
+                    CityType.YUNLIN.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.yunlin)
+                    }
+                    CityType.CHIAYI_XIAN.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.chiayi_xian)
+                    }
+                    CityType.CHIAYI.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.chiayi)
+                    }
+                    CityType.TAINAN.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.tainan)
+                    }
+                    CityType.PINTUNG.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.pintung)
+                    }
+                    CityType.TAIPEI.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.taipei)
+                    }
+                    CityType.NANTOU.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.nantou)
+                    }
+                    CityType.ZANGHUA.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.zanghua)
+                    }
+                    CityType.YILAN.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.yilan)
+                    }
+                    CityType.TIATONG.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.tiatong)
+                    }
+                    CityType.MIAOLI.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.miaoli)
+                    }
+                    CityType.XINZHU.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.xinzhu)
+                    }
+                    CityType.XINZHU_XIAN.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.xinzhu)
+                    }
+                    CityType.JINMEN.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.jinmen)
+                    }
+                    CityType.LIANJIANG.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.lianjiang)
+                    }
+                    CityType.PENGHU.value -> {
+                        bg = ContextCompat.getDrawable(it, R.drawable.penghu)
+                    }
+                }
+                homeImg.background = bg
+            }
+        }
+
+    }
 
 }

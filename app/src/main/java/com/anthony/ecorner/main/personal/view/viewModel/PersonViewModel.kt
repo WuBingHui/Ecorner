@@ -4,9 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.anthony.ecorner.dto.login.response.LoginDto
 import com.anthony.ecorner.dto.Resource
 import com.anthony.ecorner.dto.Status
-import com.anthony.ecorner.dto.personal.response.PersonalDto
-import com.anthony.ecorner.dto.personal.response.ProfileDto
-import com.anthony.ecorner.dto.personal.response.UpdateProfileDto
+import com.anthony.ecorner.dto.personal.response.*
+import com.anthony.ecorner.dto.personal.resquest.DeleteMyCollectBo
 import com.anthony.ecorner.dto.personal.resquest.ProfileBo
 import com.anthony.ecorner.dto.personal.resquest.UpdateProfileBo
 import com.anthony.ecorner.main.base.BaseViewModel
@@ -21,6 +20,8 @@ class PersonalViewModel(
     val onLogout: MutableLiveData<Resource<PersonalDto>> by lazy { MutableLiveData<Resource<PersonalDto>>() }
     val onProfile: MutableLiveData<Resource<ProfileDto>> by lazy { MutableLiveData<Resource<ProfileDto>>() }
     val onUpdateProfile: MutableLiveData<Resource<UpdateProfileDto>> by lazy { MutableLiveData<Resource<UpdateProfileDto>>() }
+    val onMyCollect: MutableLiveData<Resource<MyCollectDto>> by lazy { MutableLiveData<Resource<MyCollectDto>>() }
+    val onDeleteMyCollect: MutableLiveData<Resource<DeleteMyCollectDto>> by lazy { MutableLiveData<Resource<DeleteMyCollectDto>>() }
 
     fun postLogout() {
         personalModel.postLogout().ioToUi().subscribe(
@@ -58,5 +59,28 @@ class PersonalViewModel(
         ).addTo(compositeDisposable)
     }
 
+    fun getMyCollect() {
+        personalModel.getMyCollect().ioToUi().subscribe(
+            { dto ->
+                if (dto.result == Status.SUCCESS.value) {
+                    onMyCollect.value = Resource.success(dto)
+                } else {
+                    onMyCollect.value = Resource.error(dto.error, dto)
+                }
+            }, { t: Throwable? -> onMyCollect.value = Resource.error(t?.message, null) }
+        ).addTo(compositeDisposable)
+    }
+
+    fun postDeleteMyCollect(deleteMyCollectBo: DeleteMyCollectBo) {
+        personalModel.postDeleteMyCollect(deleteMyCollectBo).ioToUi().subscribe(
+            { dto ->
+                if (dto.result == Status.SUCCESS.value) {
+                    onDeleteMyCollect.value = Resource.success(dto)
+                } else {
+                    onDeleteMyCollect.value = Resource.error(dto.error, dto)
+                }
+            }, { t: Throwable? -> onDeleteMyCollect.value = Resource.error(t?.message, null) }
+        ).addTo(compositeDisposable)
+    }
 
 }

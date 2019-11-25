@@ -28,7 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * A simple [Fragment] subclass.
  */
 class PersonalFragment : BaseFragment() {
-    private  var  nameLabel:TextView? =null
+    private var nameLabel: TextView? = null
 
     override fun getData() {
     }
@@ -47,14 +47,14 @@ class PersonalFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        nameLabel?.text =Properties.getName()
+        nameLabel?.text = Properties.getName()
     }
 
     private fun initView(view: View) {
 
-        val nameLabel =view.findViewById<TextView>(R.id.nameLabel)
+        val nameLabel = view.findViewById<TextView>(R.id.nameLabel)
 
-        nameLabel.text =Properties.getName()
+        nameLabel.text = Properties.getName()
 
         val personal = view.findViewById<View>(R.id.personal)
         val collect = view.findViewById<View>(R.id.collect)
@@ -98,23 +98,30 @@ class PersonalFragment : BaseFragment() {
             viewModel.postLogout()
         }
         rent.setOnClickListener {
-            context?.let{
+            context?.let {
                 val intent = Intent()
-                intent.setClass(it,MyRentActivity::class.java)
+                intent.setClass(it, MyRentActivity::class.java)
                 startActivity(intent)
             }
         }
         personal.setOnClickListener {
-            context?.let{
+            context?.let {
                 val intent = Intent()
-                intent.setClass(it,PersonalInfoActivity::class.java)
+                intent.setClass(it, PersonalInfoActivity::class.java)
                 startActivity(intent)
             }
         }
         about.setOnClickListener {
-            context?.let{
+            context?.let {
                 val intent = Intent()
-                intent.setClass(it,AboutActivity::class.java)
+                intent.setClass(it, AboutActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        collect.setOnClickListener {
+            context?.let {
+                val intent = Intent()
+                intent.setClass(it, MyCollectActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -146,8 +153,6 @@ class PersonalFragment : BaseFragment() {
         })
 
     }
-
-
 
 
 }

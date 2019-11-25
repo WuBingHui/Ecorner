@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
 import com.anthony.ecorner.dto.commodity.request.ApplyCommodityBo
+import com.anthony.ecorner.dto.commodity.request.CollectBo
 import com.anthony.ecorner.main.base.BaseActivity
 import com.anthony.ecorner.main.commodity.adapter.CommodityDetailAdapter
 import com.anthony.ecorner.main.commodity.viewmodel.CommodityViewModel
@@ -68,6 +69,11 @@ class CommodityDetailActivity : BaseActivity() {
         }
         homeDeliveryRadioBtn.setOnClickListener {
             setSendMethodRadioStatus(SendMethod.HOME_DELIVERY)
+        }
+
+        colletLabel.setOnClickListener {
+            loadingDialog.show(supportFragmentManager, loadingDialog.tag)
+            viewModel.postCollect(CollectBo(id))
         }
 
         transferRadioBtn.setOnClickListener { setPayMethodRadioStatus(PayMethod.TRANSFER) }
@@ -206,6 +212,18 @@ class CommodityDetailActivity : BaseActivity() {
                 Status.SUCCESS -> {
                     Toast.makeText(this, "申請成功!", Toast.LENGTH_SHORT).show()
                     finish()
+                }
+                Status.FAILED -> {
+                    Toast.makeText(this, dto.data?.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+            loadingDialog.dismiss()
+        })
+
+        viewModel.onCollect.observe(this, Observer { dto ->
+            when (dto.status) {
+                Status.SUCCESS -> {
+                    Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT).show()
                 }
                 Status.FAILED -> {
                     Toast.makeText(this, dto.data?.error, Toast.LENGTH_SHORT).show()

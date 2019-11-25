@@ -29,16 +29,6 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name" />
 
-        <ImageView
-            android:id="@+id/collectImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:contentDescription="@string/app_name"
-            app:srcCompat="@mipmap/baseline_favorite_border_white_24" />
     </androidx.cardview.widget.CardView>
 
     <TextView

@@ -59,12 +59,10 @@ class ChildAdapter(private var context: Context) : RecyclerView.Adapter<ChildAda
 
     class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         lateinit var classImg: ImageView
-        lateinit var collectImg: ImageView
         lateinit var descriptionLabel:TextView
         lateinit var priceLabel:TextView
         fun bind() {
             classImg = itemView.findViewById(R.id.classImg)
-            collectImg = itemView.findViewById(R.id.collectImg)
             descriptionLabel = itemView.findViewById(R.id.descriptionLabel)
             priceLabel = itemView.findViewById(R.id.priceLabel)
         }

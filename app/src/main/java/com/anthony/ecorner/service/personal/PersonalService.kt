@@ -1,12 +1,12 @@
 package com.anthony.ecorner.service.personal
 
-import com.anthony.ecorner.dto.personal.response.PersonalDto
-import com.anthony.ecorner.dto.personal.response.ProfileDto
-import com.anthony.ecorner.dto.personal.response.UpdateProfileDto
+import com.anthony.ecorner.dto.personal.response.*
+import com.anthony.ecorner.dto.personal.resquest.DeleteMyCollectBo
 import com.anthony.ecorner.dto.personal.resquest.ProfileBo
 import com.anthony.ecorner.dto.personal.resquest.UpdateProfileBo
 import io.reactivex.Single
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface PersonalService {
@@ -29,4 +29,19 @@ interface PersonalService {
      */
     @POST("api/auth/update")
     fun postUpdateProfile(@Body updateProfileBo: UpdateProfileBo): Single<UpdateProfileDto>
+
+    /**
+     * 我的收藏
+     */
+    @GET("api/collet/list")
+    fun getMyCollect(): Single<MyCollectDto>
+
+    /**
+     * 刪除我的收藏
+     */
+    @POST("api/collet/remove")
+    fun postDeleteMyCollect(@Body deleteMyCollectBo: DeleteMyCollectBo): Single<DeleteMyCollectDto>
+
+
+
 }

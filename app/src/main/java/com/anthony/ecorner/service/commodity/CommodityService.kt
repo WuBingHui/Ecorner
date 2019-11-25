@@ -1,7 +1,9 @@
 package com.anthony.ecorner.service.commodity
 
 import com.anthony.ecorner.dto.commodity.request.ApplyCommodityBo
+import com.anthony.ecorner.dto.commodity.request.CollectBo
 import com.anthony.ecorner.dto.commodity.response.ApplyCommodityDto
+import com.anthony.ecorner.dto.commodity.response.CollectDto
 import com.anthony.ecorner.dto.commodity.response.CommodityDetailDto
 import com.anthony.ecorner.dto.commodity.response.UniqueCommodityDto
 import com.anthony.ecorner.main.commodity.view.CommodityActivity
@@ -28,5 +30,11 @@ interface CommodityService {
      */
     @POST("api/order/create")
     fun postApply(@Body applyCommodityBo: ApplyCommodityBo): Single<ApplyCommodityDto>
+
+    /**
+     * 新增收藏
+     */
+    @POST("api/collet/create")
+    fun postCollect(@Body collectBo: CollectBo): Single<CollectDto>
 
 }
