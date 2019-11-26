@@ -1,13 +1,12 @@
 package com.anthony.ecorner.service.home
 
 import com.anthony.ecorner.dto.home.reponse.CommodityDto
+import com.anthony.ecorner.dto.home.reponse.SearchDto
+import com.anthony.ecorner.dto.home.request.SearchBo
 import com.anthony.ecorner.dto.login.request.LoginBo
 import com.anthony.ecorner.dto.login.response.LoginDto
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface HomeService {
 
@@ -17,6 +16,10 @@ interface HomeService {
     @GET("api/product/index")
     fun getCommodity(): Single<CommodityDto>
 
-
+    /**
+     * 取得搜尋商品
+     */
+    @GET("api/product/search")
+    fun getProductSearch(@Query("keyword") keyword: String, @Query("category") category:String): Single<SearchDto>
 
 }

@@ -7,14 +7,14 @@ data class CommodityDto(
 )
 
 data class Categories(
-    val child: List<Child>?,
-    val electric: List<Electric>?,
-    val game: List<Game>?,
-    val hospital: List<Hospital>?,
-    val travel: List<Travel>?
+    val child: List<Product>?,
+    val electric: List<Product>?,
+    val game: List<Product>?,
+    val hospital: List<Product>?,
+    val travel: List<Product>?
 )
 
-data class Child(
+data class Product(
     val address: String,
     val category: String,
     val deposit_amount: Int,
@@ -26,50 +26,3 @@ data class Child(
     val status: Int
 )
 
-data class Electric(
-    val address: String,
-    val category: String,
-    val deposit_amount: Int,
-    val description: String,
-    val id: Int,
-    val images: List<String>?,
-    val name: String,
-    val rent_amount: Int,
-    val status: Int
-)
-
-data class Game(
-    val address: String,
-    val category: String,
-    val deposit_amount: Int,
-    val description: String,
-    val id: Int,
-    val images: List<String>?,
-    val name: String,
-    val rent_amount: Int,
-    val status: Int
-)
-
-data class Hospital(
-    val address: String,
-    val category: String,
-    val deposit_amount: Int,
-    val description: String,
-    val id: Int,
-    val images: List<String>?,
-    val name: String,
-    val rent_amount: Int,
-    val status: Int
-)
-
-data class Travel(
-    val address: String,
-    val category: String,
-    val deposit_amount: Int,
-    val description: String,
-    val id: Int,
-    val images: List<String>?,
-    val name: String,
-    val rent_amount: Int,
-    val status: Int
-)

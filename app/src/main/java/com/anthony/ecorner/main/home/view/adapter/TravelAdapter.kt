@@ -9,16 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
-import com.anthony.ecorner.dto.home.reponse.Travel
+import com.anthony.ecorner.dto.home.reponse.Product
 import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
 import com.bumptech.glide.Glide
 
 
 class TravelAdapter(private var context: Context) : RecyclerView.Adapter<TravelAdapter.CardViewHolder>() {
 
-    private var data = listOf<Travel>()
+    private var data = listOf<Product>()
 
-    fun setData(data: List<Travel>) {
+    fun setData(data: List<Product>) {
         this.data = data
         notifyDataSetChanged()
     }

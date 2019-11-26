@@ -70,6 +70,37 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shape_oval_white_bg"
+            android:drawableStart="@mipmap/baseline_search_black_24"
+            android:drawableLeft="@mipmap/baseline_search_black_24"
+            android:drawablePadding="4dp"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp"
+            android:textColor="@android:color/background_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/searchLabel"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/searchLabel"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/search"
+            android:textColor="@color/md_white_1000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"

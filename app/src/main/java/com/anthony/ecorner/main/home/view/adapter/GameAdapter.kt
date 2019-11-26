@@ -9,15 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
-import com.anthony.ecorner.dto.home.reponse.Game
-import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
+import com.anthony.ecorner.dto.home.reponse.Product
 import com.bumptech.glide.Glide
 
 class GameAdapter(private var context: Context) : RecyclerView.Adapter<GameAdapter.CardViewHolder>() {
 
-    private var data = listOf<Game>()
+    private var data = listOf<Product>()
 
-    fun setData(data: List<Game>) {
+    fun setData(data: List<Product>) {
         this.data = data
         notifyDataSetChanged()
     }

@@ -29,6 +29,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.anthony.ecorner.dto.home.request.SearchBo
 import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
 import com.anthony.ecorner.main.message.view.viewModel.MessageViewModel
@@ -68,7 +69,13 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         const val TYPE = "TYPE"
         const val LOCATION_REQUEST_CODE = 1000
     }
-
+    enum class SearchType {
+        child,
+        travel,
+        hospital,
+        electric,
+        game
+    }
     enum class CityType(val value: String) {
         NEW_CITY_TAIPEI("新北市"),
         HUALIEN("花蓮縣"),
@@ -214,6 +221,12 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             )
         }
 
+        searchLabel.setOnClickListener {
+            fragmentManager?.let {
+                loadingDialog.show(it, loadingDialog.tag)
+                viewModel.getProductSearch(searchEditText.text.toString(),"all")
+            }
+        }
 
         childRecyclerView =
             view.findViewById<View>(R.id.childType).findViewById(R.id.classRecyclerView)
@@ -314,6 +327,24 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
                     Status.FAILED -> {
                         Toast.makeText(context, dto.data?.error, Toast.LENGTH_SHORT).show()
                     }
+                }
+            }
+            loadingDialog.dismiss()
+        })
+        viewModel.onSearch.observe(this, Observer { dto ->
+            when (dto.status) {
+                Status.SUCCESS -> {
+                    dto.data?.let {
+                        childAdapter.setData(it.data.filter { it.category ==SearchType.child.name})
+                        travelAdapter.setData(it.data.filter { it.category ==SearchType.travel.name})
+                        hospitalAdapter.setData(it.data.filter { it.category ==SearchType.hospital.name})
+                        electricAdapter.setData(it.data.filter { it.category ==SearchType.electric.name})
+                        gameAdapter.setData(it.data.filter { it.category ==SearchType.game.name})
+                    }
+
+                }
+                Status.FAILED -> {
+                    Toast.makeText(context, dto.data?.error, Toast.LENGTH_SHORT).show()
                 }
             }
             loadingDialog.dismiss()

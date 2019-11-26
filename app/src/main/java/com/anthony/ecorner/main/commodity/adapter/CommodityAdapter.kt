@@ -9,12 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.commodity.response.Product
-import com.anthony.ecorner.dto.home.reponse.Child
 import com.anthony.ecorner.extension.dp2px
 import com.anthony.ecorner.extension.getWindowWidth
 import com.anthony.ecorner.main.commodity.view.CommodityActivity
-import com.anthony.ecorner.main.commodity.view.CommodityActivity.Companion.commodityActivity
-import com.anthony.ecorner.main.main.view.MainActivity.Companion.activity
 import com.bumptech.glide.Glide
 
 class CommodityAdapter(private var context: Context) :

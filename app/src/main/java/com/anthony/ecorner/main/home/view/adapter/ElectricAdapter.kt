@@ -8,14 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
-import com.anthony.ecorner.dto.home.reponse.Electric
+import com.anthony.ecorner.dto.home.reponse.Product
 import com.bumptech.glide.Glide
 
 class ElectricAdapter(private var context: Context) : RecyclerView.Adapter<ElectricAdapter.CardViewHolder>() {
 
-    private var data = listOf<Electric>()
+    private var data = listOf<Product>()
 
-    fun setData(data: List<Electric>) {
+    fun setData(data: List<Product>) {
         this.data = data
         notifyDataSetChanged()
     }
