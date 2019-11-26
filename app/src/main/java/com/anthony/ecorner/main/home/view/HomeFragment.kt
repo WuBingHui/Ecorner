@@ -68,14 +68,12 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         const val TYPE_NAME = "TYPE_NAME"
         const val TYPE = "TYPE"
         const val LOCATION_REQUEST_CODE = 1000
+
+        const val KEYWORD = "KEYWORD"
+        const val CATEGORY = "CATEGORY"
+
     }
-    enum class SearchType {
-        child,
-        travel,
-        hospital,
-        electric,
-        game
-    }
+
     enum class CityType(val value: String) {
         NEW_CITY_TAIPEI("新北市"),
         HUALIEN("花蓮縣"),
@@ -222,9 +220,12 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
         }
 
         searchLabel.setOnClickListener {
-            fragmentManager?.let {
-                loadingDialog.show(it, loadingDialog.tag)
-                viewModel.getProductSearch(searchEditText.text.toString(),"all")
+            context?.let {
+                val intent = Intent()
+                intent.putExtra(KEYWORD, searchEditText.text.toString())
+                intent.putExtra(CATEGORY, "all")
+                intent.setClass(it, SearchActivity::class.java)
+                startActivity(intent)
             }
         }
 
@@ -331,24 +332,7 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
             }
             loadingDialog.dismiss()
         })
-        viewModel.onSearch.observe(this, Observer { dto ->
-            when (dto.status) {
-                Status.SUCCESS -> {
-                    dto.data?.let {
-                        childAdapter.setData(it.data.filter { it.category ==SearchType.child.name})
-                        travelAdapter.setData(it.data.filter { it.category ==SearchType.travel.name})
-                        hospitalAdapter.setData(it.data.filter { it.category ==SearchType.hospital.name})
-                        electricAdapter.setData(it.data.filter { it.category ==SearchType.electric.name})
-                        gameAdapter.setData(it.data.filter { it.category ==SearchType.game.name})
-                    }
 
-                }
-                Status.FAILED -> {
-                    Toast.makeText(context, dto.data?.error, Toast.LENGTH_SHORT).show()
-                }
-            }
-            loadingDialog.dismiss()
-        })
     }
 
     private fun openCommodityPage(typeName: String, type: String) {
