@@ -123,13 +123,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:padding="8dp"
-                android:text="@string/rent_amount"
+                android:text="商品租金/天"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textView6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textStyle="bold" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/amountLabel"
@@ -278,20 +278,49 @@
                 android:id="@+id/transferEditText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:background="@drawable/shape_rectangle_white_bg"
                 android:ems="10"
                 android:hint="輸入匯款帳號"
                 android:inputType="textPersonName"
                 android:padding="8dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/transferRadioBtn"
+                app:layout_constraintEnd_toStartOf="@+id/transferNameEditText"
+                app:layout_constraintStart_toEndOf="@+id/transferRadioBtn"
+                app:layout_constraintTop_toTopOf="@+id/transferRadioBtn" />
+
+            <EditText
+                android:id="@+id/transferNameEditText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/shape_rectangle_white_bg"
+                android:hint="輸入姓名"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/transferRadioBtn"
+                app:layout_constraintEnd_toStartOf="@+id/transferPhoneEditText"
+                app:layout_constraintStart_toEndOf="@+id/transferEditText"
+                app:layout_constraintTop_toTopOf="@+id/transferRadioBtn" />
+
+            <EditText
+                android:id="@+id/transferPhoneEditText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/shape_rectangle_white_bg"
+                android:hint="輸入電話"
+                android:inputType="phone"
+                android:padding="8dp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/transferRadioBtn"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/transferRadioBtn"
+                app:layout_constraintStart_toEndOf="@+id/transferNameEditText"
                 app:layout_constraintTop_toTopOf="@+id/transferRadioBtn" />
 
             <EditText

@@ -157,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="寄送方式："
+        android:text="配送方式："
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
         android:textStyle="bold"

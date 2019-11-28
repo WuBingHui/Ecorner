@@ -170,6 +170,8 @@ class CommodityDetailActivity : BaseActivity() {
                 cashOnDeliveryRadioBtn.isChecked = true
                 cashOnDeliveryEditText.visibility = View.VISIBLE
                 transferEditText.visibility = View.GONE
+                transferNameEditText.visibility = View.GONE
+                transferPhoneEditText.visibility = View.GONE
             }
             PayMethod.TRANSFER -> {
                 payment = "轉帳"
@@ -177,6 +179,8 @@ class CommodityDetailActivity : BaseActivity() {
                 transferRadioBtn.isChecked = true
                 cashOnDeliveryEditText.visibility = View.GONE
                 transferEditText.visibility = View.GONE
+                transferNameEditText.visibility = View.VISIBLE
+                transferPhoneEditText.visibility = View.VISIBLE
             }
 
         }
@@ -249,7 +253,7 @@ class CommodityDetailActivity : BaseActivity() {
                             superCommercialEditText.text.toString(),
                             homeDeliveryEditText.text.toString(),
                             cashOnDeliveryEditText.text.toString(),
-                            transferEditText.text.toString()))
+                            "${transferEditText.text}/${transferNameEditText.text}/${transferPhoneEditText.text}"))
 
                 }
                 .setNeutralButton("取消", null)

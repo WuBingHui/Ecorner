@@ -56,6 +56,7 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
     private lateinit var hospitalRecyclerView: RecyclerView
     private lateinit var electricRecyclerView: RecyclerView
     private lateinit var gameRecyclerView: RecyclerView
+    private lateinit var  cityLabel:TextView
 
     private lateinit var childAdapter: ChildAdapter
     private lateinit var travelAdapter: TravelAdapter
@@ -128,7 +129,7 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
 
     private fun initView(view: View) {
-
+             cityLabel = view.findViewById(R.id.cityLabel)
         val childLabel =
             view.findViewById<View>(R.id.childType).findViewById<TextView>(R.id.classLabel)
         val travelLabel =

@@ -110,7 +110,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center|start"
-            android:text="@string/home"
+            android:text="Ecorner"
             android:textColor="@color/md_white_1000"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -142,13 +142,6 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/childType"
-                layout="@layout/view_class_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
-
-            <include
                 android:id="@+id/travelType"
                 layout="@layout/view_class_group"
                 android:layout_width="match_parent"
@@ -175,6 +168,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" />
+
+            <include
+                android:id="@+id/childType"
+                layout="@layout/view_class_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
         </LinearLayout>
     </ScrollView>
 
