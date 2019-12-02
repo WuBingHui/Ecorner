@@ -43,16 +43,20 @@ object Properties {
     private var id = -1
     private var name = ""
     private var username =""
+    private var address =""
 
     fun clearProperties() {
         this.id = -1
         this.name =""
         this.username =""
+        this.address =""
     }
 
     fun getId() = id
 
     fun getName()= name
+
+    fun getAddress() = address
 
     fun getUsername()=username
 
@@ -60,10 +64,11 @@ object Properties {
         this.name =name
     }
 
-    fun setUserInfo(id: Int,name:String,username:String) {
+    fun setUserInfo(id: Int,name:String,username:String,address:String="") {
         this.id = id
         this.name =name
         this.username = username
+        this.address = address
     }
 
 }

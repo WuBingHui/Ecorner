@@ -135,7 +135,7 @@ class CommodityDetailActivity : BaseActivity() {
                 shipping = "自提自取"
 
                 selfGetRadioBtn.isChecked = true
-                selfGetEditText.visibility = View.VISIBLE
+                selfGetEditText.visibility = View.GONE
                 superCommercialEditText.visibility = View.GONE
                 homeDeliveryEditText.visibility = View.GONE
             }

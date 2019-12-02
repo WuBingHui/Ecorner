@@ -9,6 +9,7 @@ import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
 import com.anthony.ecorner.dto.my_rent.request.ReplyApplicantBo
 import com.anthony.ecorner.dto.my_rent.response.Order
+import com.anthony.ecorner.koin.Properties
 import com.anthony.ecorner.main.base.BaseActivity
 import com.anthony.ecorner.main.my_rent.viewmodel.MyRentViewModel
 import com.anthony.ecorner.widget.CustomLoadingDialog
@@ -99,7 +100,7 @@ class ReplyApplicationActivity : BaseActivity() {
 
     private fun getShippingContent(order:Order):String{
         if(order.trading_location.isNotEmpty()){
-            return order.trading_location
+            return "${order.trading_location}/${Properties.getAddress()}"
         }
         if(order.store_number.isNotEmpty()){
             return order.store_number
