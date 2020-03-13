@@ -29,6 +29,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import com.anthony.ecorner.dto.home.request.SearchBo
 import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
@@ -244,21 +245,21 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
     private fun initRecyclerView() {
         context?.let {
-            val childLinearLayoutManager = LinearLayoutManager(it)
-            val travelLinearLayoutManager = LinearLayoutManager(it)
-            val hospitalLinearLayoutManager = LinearLayoutManager(it)
-            val electricLinearLayoutManager = LinearLayoutManager(it)
-            val gameLinearLayoutManager = LinearLayoutManager(it)
-            childLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            travelLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            hospitalLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            electricLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            gameLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            childAdapter = ChildAdapter(it)
-            travelAdapter = TravelAdapter(it)
-            hospitalAdapter = HospitalAdapter(it)
-            electricAdapter = ElectricAdapter(it)
-            gameAdapter = GameAdapter(it)
+            val childLinearLayoutManager = GridLayoutManager(it,2)
+            val travelLinearLayoutManager = GridLayoutManager(it,2)
+            val hospitalLinearLayoutManager = GridLayoutManager(it,2)
+            val electricLinearLayoutManager = GridLayoutManager(it,2)
+            val gameLinearLayoutManager = GridLayoutManager(it,2)
+            childLinearLayoutManager.orientation = GridLayoutManager.VERTICAL
+            travelLinearLayoutManager.orientation = GridLayoutManager.VERTICAL
+            hospitalLinearLayoutManager.orientation = GridLayoutManager.VERTICAL
+            electricLinearLayoutManager.orientation = GridLayoutManager.VERTICAL
+            gameLinearLayoutManager.orientation = GridLayoutManager.VERTICAL
+            childAdapter = ChildAdapter()
+            travelAdapter = TravelAdapter()
+            hospitalAdapter = HospitalAdapter()
+            electricAdapter = ElectricAdapter()
+            gameAdapter = GameAdapter()
 
             childRecyclerView.layoutManager = childLinearLayoutManager
             travelRecyclerView.layoutManager = travelLinearLayoutManager
@@ -310,19 +311,19 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
                     Status.SUCCESS -> {
                         dto.data?.let {
                             it.categories.child?.let {
-                                childAdapter.setData(it)
+                                childAdapter.setData(it.take(4))
                             }
                             it.categories.travel?.let {
-                                travelAdapter.setData(it)
+                                travelAdapter.setData(it.take(4))
                             }
                             it.categories.hospital?.let {
-                                hospitalAdapter.setData(it)
+                                hospitalAdapter.setData(it.take(4))
                             }
                             it.categories.electric?.let {
-                                electricAdapter.setData(it)
+                                electricAdapter.setData(it.take(4))
                             }
                             it.categories.game?.let {
-                                gameAdapter.setData(it)
+                                gameAdapter.setData(it.take(4))
                             }
                         }
                     }

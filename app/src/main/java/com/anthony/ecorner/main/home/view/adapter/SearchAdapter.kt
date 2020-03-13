@@ -14,7 +14,7 @@ import com.anthony.ecorner.extension.getWindowWidth
 import com.anthony.ecorner.main.home.view.SearchActivity
 import com.bumptech.glide.Glide
 
-class SearchAdapter(private var context: Context) :
+class SearchAdapter() :
     RecyclerView.Adapter<SearchAdapter.CardViewHolder>() {
 
     private var data = listOf<Product>()
@@ -34,12 +34,11 @@ class SearchAdapter(private var context: Context) :
         viewType: Int
     ): CardViewHolder {
         val view = CardViewHolder(
-            LayoutInflater.from(context).inflate(
+            LayoutInflater.from(parent.context).inflate(
                 R.layout.view_class_big_item,
                 parent,
                 false
-            ),
-            context
+            )
         )
 
         return view
@@ -49,14 +48,14 @@ class SearchAdapter(private var context: Context) :
 
 
             data[position].images?.let {
-                Glide.with(context)
+                Glide.with(holder.itemView.context)
                     .load(it[0])
                     .placeholder(R.drawable.mobile)
                     .into( holder.classImg)
             }
             holder. descriptionLabel.text = data[position].name
-            holder. priceLabel.text = String.format(context.getString(R.string.amount),data[position].rent_amount.toString())
-            val iv = ((context as SearchActivity).getWindowWidth() - context.dp2px(20) * 5) / 3
+            holder. priceLabel.text = String.format(holder.itemView.context.getString(R.string.amount),data[position].rent_amount.toString())
+            val iv = ((holder.itemView.context as SearchActivity).getWindowWidth() - holder.itemView.context.dp2px(20) * 5) / 3
             holder.classImg.layoutParams.width = iv
             holder.classImg.layoutParams.height = iv
             setItemClick?.let {itemClick->
@@ -71,7 +70,7 @@ class SearchAdapter(private var context: Context) :
     }
 
 
-    inner class CardViewHolder internal constructor(itemView: View, context: Context) :
+    inner class CardViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         var classImg: ImageView = itemView.findViewById(R.id.classImg)
         var descriptionLabel: TextView = itemView.findViewById(R.id.descriptionLabel)

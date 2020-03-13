@@ -13,7 +13,7 @@ import com.anthony.ecorner.dto.home.reponse.Product
 import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
 import com.bumptech.glide.Glide
 
-class ChildAdapter(private var context: Context) : RecyclerView.Adapter<ChildAdapter.CardViewHolder>() {
+class ChildAdapter() : RecyclerView.Adapter<ChildAdapter.CardViewHolder>() {
 
     private var data = listOf<Product>()
 
@@ -28,7 +28,7 @@ class ChildAdapter(private var context: Context) : RecyclerView.Adapter<ChildAda
         viewType: Int
     ): CardViewHolder {
         return CardViewHolder(
-            LayoutInflater.from(context).inflate(
+            LayoutInflater.from(parent.context).inflate(
                 R.layout.view_class_item,
                 parent,
                 false
@@ -40,13 +40,13 @@ class ChildAdapter(private var context: Context) : RecyclerView.Adapter<ChildAda
         holder.bind()
         val data = data[position]
         data.images?.let {
-            Glide.with(context)
+            Glide.with(holder.itemView.context)
                 .load(it[0])
                 .placeholder(R.drawable.mobile)
                 .into( holder.classImg)
         }
         holder. descriptionLabel.text = data.name
-        holder. priceLabel.text = String.format(context.getString(R.string.amount),data.rent_amount.toString())
+        holder. priceLabel.text = String.format(holder.itemView.context.getString(R.string.amount),data.rent_amount.toString())
         setItemClick?.let {itemClick->
             holder.itemView.setOnClickListener { itemClick.onClick(data.id) }
         }

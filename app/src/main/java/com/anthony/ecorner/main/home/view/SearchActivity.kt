@@ -46,7 +46,7 @@ class SearchActivity : AppCompatActivity() {
 
         val column = 3
         val gridLayoutManager = GridLayoutManager(this, column)
-        searchAdapter = SearchAdapter(this)
+        searchAdapter = SearchAdapter()
         searchAdapter.setOnItemClick(object : SearchAdapter.SetItemClick {
             override fun onClick(id: Int) {
                 val intent = Intent()
