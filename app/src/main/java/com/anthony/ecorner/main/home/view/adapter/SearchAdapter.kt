@@ -73,7 +73,7 @@ class SearchAdapter() :
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
 
-        if (isScrolling ) {
+        if (isScrolling && !data[position].isLoaded ) {
             Glide.with(holder.itemView.context).pauseRequests()
         } else {
             Glide.with(holder.itemView.context).resumeRequests()
@@ -100,6 +100,7 @@ class SearchAdapter() :
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
+                        data[position].isLoaded = true
                         return false;
                     }
                 })

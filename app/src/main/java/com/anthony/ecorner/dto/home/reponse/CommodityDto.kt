@@ -23,6 +23,7 @@ data class Product(
     val images: List<String>?,
     val name: String,
     val rent_amount: Int,
-    val status: Int
+    val status: Int,
+    var isLoaded:Boolean = false
 )
 
