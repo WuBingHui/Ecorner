@@ -3,12 +3,14 @@ package com.anthony.ecorner.main.home.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
+import com.anthony.ecorner.dto.home.reponse.Product
 import com.anthony.ecorner.extension.dp2px
 import com.anthony.ecorner.main.commodity.ItemDecoration.SpaceItemDecoration
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
@@ -34,11 +36,24 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
 
         initView()
+        initSwipe()
         initViewModel()
         val intent = intent
         loadingDialog.show(supportFragmentManager, loadingDialog.tag)
         viewModel.getProductSearch(intent.getStringExtra(KEYWORD),intent.getStringExtra(CATEGORY))
 
+    }
+
+    private fun initSwipe() {
+
+        laySwipe.setOnRefreshListener {
+            Handler().postDelayed({
+                if (laySwipe.isRefreshing) laySwipe.isRefreshing = false
+
+            }, 1000)
+        }
+
+        laySwipe.setColorSchemeResources(R.color.winterNevaDark, R.color.winterNevaDark)
     }
 
     private fun initView(){
