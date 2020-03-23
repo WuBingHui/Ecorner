@@ -7,11 +7,11 @@ data class CommodityDto(
 )
 
 data class Categories(
-    val child: List<Product>?,
-    val electric: List<Product>?,
-    val game: List<Product>?,
-    val hospital: List<Product>?,
-    val travel: List<Product>?
+    val child: MutableList<Product>?,
+    val electric: MutableList<Product>?,
+    val game: MutableList<Product>?,
+    val hospital: MutableList<Product>?,
+    val travel: MutableList<Product>?
 )
 
 data class Product(

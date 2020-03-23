@@ -7,22 +7,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.home.reponse.Product
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
+import com.anthony.ecorner.main.home.view.HomeDiffCallback
 import com.bumptech.glide.Glide
 import io.reactivex.subjects.BehaviorSubject
 
 class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
 
-    private val itemClickCallBack = BehaviorSubject.create<Int>()
-
-    private var data = listOf<Product>()
+    private var data = mutableListOf<Product>()
 
     fun setData(data: List<Product>) {
-        this.data = data
-        notifyDataSetChanged()
+
+        val diffCallback = HomeDiffCallback(this.data, data)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        this.data.clear()
+        this.data.addAll(data)
+
+        diffResult.dispatchUpdatesTo(this)
+
     }
 
 
