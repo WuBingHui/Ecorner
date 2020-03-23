@@ -18,11 +18,13 @@ import io.reactivex.subjects.PublishSubject
 class HomeAdapter(private val data: List<String>) :
     RecyclerView.Adapter<HomeAdapter.CardViewHolder>() {
 
-    private var commodity:CommodityDto?= null
+    private var pool: RecyclerView.RecycledViewPool? = null
 
-    private val moreCallBack = PublishSubject.create<Pair<String,String>>()
+    private var commodity: CommodityDto? = null
 
-    fun getMoreCallBack(): Observable<Pair<String,String>> = moreCallBack
+    private val moreCallBack = PublishSubject.create<Pair<String, String>>()
+
+    fun getMoreCallBack(): Observable<Pair<String, String>> = moreCallBack
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -37,8 +39,8 @@ class HomeAdapter(private val data: List<String>) :
         )
     }
 
-    fun setData(commodity:CommodityDto?){
-            this.commodity = commodity
+    fun setData(commodity: CommodityDto?) {
+        this.commodity = commodity
         notifyDataSetChanged()
     }
 
@@ -47,38 +49,38 @@ class HomeAdapter(private val data: List<String>) :
 
         var name = ""
         var drawable: Drawable? = null
-        var type =""
-        var productList:List<Product>? = null
+        var type = ""
+        var productList: List<Product>? = null
 
         when (position) {
             0 -> {
                 name = context.getString(R.string.child)
                 drawable = ContextCompat.getDrawable(context, R.drawable.toddler)
-                type =  ProductType.CHILD.value
+                type = ProductType.CHILD.value
                 productList = commodity?.categories?.child?.take(4)
             }
             1 -> {
                 name = context.getString(R.string.travel)
                 drawable = ContextCompat.getDrawable(context, R.drawable.world)
-                type =  ProductType.TRAVEL.value
+                type = ProductType.TRAVEL.value
                 productList = commodity?.categories?.travel?.take(4)
             }
             2 -> {
                 name = context.getString(R.string.hospital)
                 drawable = ContextCompat.getDrawable(context, R.drawable.sign_hospital)
-                type =  ProductType.HOSPITAL.value
+                type = ProductType.HOSPITAL.value
                 productList = commodity?.categories?.hospital?.take(4)
             }
             3 -> {
                 name = context.getString(R.string.electric)
                 drawable = ContextCompat.getDrawable(context, R.drawable.mobile)
-                type =  ProductType.ELECTRIC.value
+                type = ProductType.ELECTRIC.value
                 productList = commodity?.categories?.electric?.take(4)
             }
             4 -> {
                 name = context.getString(R.string.game)
                 drawable = ContextCompat.getDrawable(context, R.drawable.games_control)
-                type =  ProductType.GAME.value
+                type = ProductType.GAME.value
                 productList = commodity?.categories?.game?.take(4)
             }
         }
@@ -89,7 +91,7 @@ class HomeAdapter(private val data: List<String>) :
             drawable, null, null, null
         )
 
-        holder.moreLabel.tag = Pair(name,type)
+        holder.moreLabel.tag = Pair(name, type)
 
         holder.moreLabel.setOnClickListener(moreListener)
 
@@ -107,7 +109,7 @@ class HomeAdapter(private val data: List<String>) :
     }
 
     private val moreListener = View.OnClickListener {
-       val pair = it.tag as Pair<String,String>
+        val pair = it.tag as Pair<String, String>
         moreCallBack.onNext(pair)
     }
 
@@ -122,10 +124,20 @@ class HomeAdapter(private val data: List<String>) :
 
         val typeAdapter = TypeAdapter()
 
+
         init {
-            val gridLayoutManager = GridLayoutManager(itemView.context,2)
+
+            val gridLayoutManager = GridLayoutManager(itemView.context, 2)
 
             gridLayoutManager.orientation = GridLayoutManager.VERTICAL
+
+            gridLayoutManager.recycleChildrenOnDetach = true
+
+            if(pool == null){
+                pool = classRecyclerView.recycledViewPool
+            }
+
+            classRecyclerView.setRecycledViewPool(pool)
 
             classRecyclerView.layoutManager = gridLayoutManager
 

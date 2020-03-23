@@ -87,6 +87,7 @@ class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
 
         lateinit var descriptionLabel: TextView
         lateinit var priceLabel: TextView
+
         fun bind() {
             classImg = itemView.findViewById(R.id.classImg)
 
