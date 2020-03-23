@@ -142,7 +142,7 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
     private fun initRecyclerView() {
         context?.let {
 
-            val linearLayoutManager = LinearLayoutManager(it)
+            val linearLayoutManager = CustomLinearLayoutManager(it)
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             homeAdapter = HomeAdapter(listOf(CHILD, TRAVEL, HOSPITAL, ELECTRIC, GAME))
             homeRecyclerView.setHasFixedSize(true)
