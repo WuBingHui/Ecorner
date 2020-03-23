@@ -3,7 +3,7 @@ package com.anthony.ecorner.main.home.view
 import androidx.recyclerview.widget.DiffUtil
 import com.anthony.ecorner.dto.home.reponse.Product
 
-class HomeDiffCallback(
+class TypeDiffCallback(
     private val oldList: List<Product>,
     private val newList: List<Product>
 ) : DiffUtil.Callback() {

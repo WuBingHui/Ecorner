@@ -133,6 +133,8 @@ class HomeAdapter(private val data: List<String>) :
 
             gridLayoutManager.recycleChildrenOnDetach = true
 
+            gridLayoutManager.initialPrefetchItemCount = 5
+
             if(pool == null){
                 pool = classRecyclerView.recycledViewPool
             }

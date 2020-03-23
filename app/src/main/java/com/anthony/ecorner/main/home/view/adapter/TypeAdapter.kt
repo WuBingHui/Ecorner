@@ -2,7 +2,6 @@ package com.anthony.ecorner.main.home.view.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.home.reponse.Product
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
-import com.anthony.ecorner.main.home.view.HomeDiffCallback
+import com.anthony.ecorner.main.home.view.TypeDiffCallback
 import com.bumptech.glide.Glide
-import io.reactivex.subjects.BehaviorSubject
 
 class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
 
@@ -23,7 +21,7 @@ class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
 
     fun setData(data: List<Product>) {
 
-        val diffCallback = HomeDiffCallback(this.data, data)
+        val diffCallback = TypeDiffCallback(this.data, data)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         this.data.clear()
@@ -96,6 +94,7 @@ class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
 
         lateinit var descriptionLabel: TextView
         lateinit var priceLabel: TextView
+
 
         fun bind() {
             classImg = itemView.findViewById(R.id.classImg)

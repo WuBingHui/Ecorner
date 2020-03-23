@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
 import com.anthony.ecorner.extension.dp2px
@@ -14,6 +15,7 @@ import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
 import com.anthony.ecorner.main.home.view.adapter.SearchAdapter
 import com.anthony.ecorner.main.home.view.viewModel.HomeViewModel
 import com.anthony.ecorner.widget.CustomLoadingDialog
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -56,6 +58,21 @@ class SearchActivity : AppCompatActivity() {
         searchRecyclerView.layoutManager = gridLayoutManager
         searchRecyclerView.addItemDecoration(SpaceItemDecoration(this.dp2px(20), column))
         searchRecyclerView.adapter = searchAdapter
+        searchRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                // 查看源碼可知State有三種狀態：SCROLL_STATE_IDLE（靜止）、SCROLL_STATE_DRAGGING（上升）、SCROLL_STATE_SETTLING（下落）
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) { // 滾動靜止時才加載圖片資源，極大提升流暢度
+                    searchAdapter.isScrolling(false);
+                    //通知adapter恢复getview中的图下载
+                    if(Glide.with(this@SearchActivity).isPaused)Glide.with(this@SearchActivity).resumeRequests()
+                } else{
+                    searchAdapter.isScrolling(true);
+                }
+
+                super.onScrollStateChanged(recyclerView, newState)
+
+            }
+        })
     }
 
     private fun initViewModel(){
