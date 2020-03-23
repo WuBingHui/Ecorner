@@ -10,14 +10,11 @@ import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.Status
 import com.anthony.ecorner.extension.dp2px
 import com.anthony.ecorner.main.commodity.ItemDecoration.SpaceItemDecoration
-import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
 import com.anthony.ecorner.main.home.view.adapter.SearchAdapter
 import com.anthony.ecorner.main.home.view.viewModel.HomeViewModel
 import com.anthony.ecorner.widget.CustomLoadingDialog
-import kotlinx.android.synthetic.main.activity_commodity.*
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
@@ -55,6 +52,7 @@ class SearchActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+        searchRecyclerView.setHasFixedSize(true)
         searchRecyclerView.layoutManager = gridLayoutManager
         searchRecyclerView.addItemDecoration(SpaceItemDecoration(this.dp2px(20), column))
         searchRecyclerView.adapter = searchAdapter

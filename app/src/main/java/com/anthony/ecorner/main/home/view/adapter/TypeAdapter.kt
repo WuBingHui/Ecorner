@@ -1,7 +1,7 @@
 package com.anthony.ecorner.main.home.view.adapter
 
 import android.content.Context
-import android.graphics.drawable.Drawable
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.home.reponse.Product
-import com.anthony.ecorner.main.commodity.adapter.CommodityAdapter
+import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
 import com.bumptech.glide.Glide
+import io.reactivex.subjects.BehaviorSubject
 
-class HospitalAdapter() : RecyclerView.Adapter<HospitalAdapter.CardViewHolder>() {
+class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
+
+    private val itemClickCallBack = BehaviorSubject.create<Int>()
 
     private var data = listOf<Product>()
 
@@ -43,13 +46,35 @@ class HospitalAdapter() : RecyclerView.Adapter<HospitalAdapter.CardViewHolder>()
             Glide.with(holder.itemView.context)
                 .load(it[0])
                 .placeholder(R.drawable.mobile)
-                .into( holder.classImg)
+                .into(holder.classImg)
         }
-        holder. descriptionLabel.text =  data.name
-        holder. priceLabel.text = String.format(holder.itemView.context.getString(R.string.amount),data.rent_amount.toString())
-        setItemClick?.let {itemClick->
-            holder.itemView.setOnClickListener { itemClick.onClick(data.id) }
-        }
+        holder.descriptionLabel.text = data.name
+        holder.priceLabel.text = String.format(
+            holder.itemView.context.getString(R.string.amount),
+            data.rent_amount.toString()
+        )
+
+        holder.itemView.tag = Pair(holder.itemView.context, data.id)
+
+        holder.itemView.setOnClickListener(itemViewListener)
+
+    }
+
+    private val itemViewListener = View.OnClickListener {
+
+        val pair = it.tag as Pair<Context,Int>
+
+        goCommodityDetailPage(pair.first,pair.second)
+
+    }
+
+    private fun goCommodityDetailPage(context: Context, id: Int) {
+
+        val intent = Intent()
+        intent.putExtra("ID", id)
+        intent.setClass(context, CommodityDetailActivity::class.java)
+        context.startActivity(intent)
+
     }
 
     override fun getItemCount(): Int {
@@ -69,11 +94,5 @@ class HospitalAdapter() : RecyclerView.Adapter<HospitalAdapter.CardViewHolder>()
             priceLabel = itemView.findViewById(R.id.priceLabel)
         }
     }
-    private var setItemClick: SetItemClick? = null
-    interface SetItemClick {
-        fun onClick(id:Int)
-    }
-    fun setOnItemClick(setItemClick: SetItemClick) {
-        this.setItemClick = setItemClick
-    }
+
 }
