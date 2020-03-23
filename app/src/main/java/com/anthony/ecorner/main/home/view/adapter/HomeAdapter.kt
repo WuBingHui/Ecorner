@@ -116,11 +116,11 @@ class HomeAdapter(private val data: List<String>) :
 
     inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val classLabel = itemView.findViewById<TextView>(R.id.classLabel)
+        val classLabel: TextView = itemView.findViewById(R.id.classLabel)
 
-        val moreLabel = itemView.findViewById<TextView>(R.id.moreLabel)
+        val moreLabel: TextView = itemView.findViewById(R.id.moreLabel)
 
-        val classRecyclerView = itemView.findViewById<RecyclerView>(R.id.classRecyclerView)
+        private val classRecyclerView: RecyclerView = itemView.findViewById(R.id.classRecyclerView)
 
         val typeAdapter = TypeAdapter()
 
