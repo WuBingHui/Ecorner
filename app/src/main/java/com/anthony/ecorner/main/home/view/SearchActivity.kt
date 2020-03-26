@@ -96,7 +96,7 @@ class SearchActivity : AppCompatActivity() {
             when (dto.status) {
                 Status.SUCCESS -> {
                     dto.data?.let {
-                        searchAdapter.setData(it.data)
+                        searchAdapter.submitList(it.data)
                     }
                 }
                 Status.FAILED -> {

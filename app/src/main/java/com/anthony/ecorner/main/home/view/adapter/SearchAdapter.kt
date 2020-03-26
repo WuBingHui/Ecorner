@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
@@ -19,15 +20,29 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import kotlinx.android.synthetic.main.view_class_big_item.view.*
 
 class SearchAdapter() :
     RecyclerView.Adapter<SearchAdapter.CardViewHolder>() {
 
-    private var data = mutableListOf<Product>()
-
     private var setItemClick: SetItemClick? = null
 
     private var isScrolling = false
+
+
+    private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+
 
     fun isScrolling(isScrolling: Boolean) {
 
@@ -35,15 +50,9 @@ class SearchAdapter() :
 
     }
 
-    fun setData(data: List<Product>) {
+    fun submitList(data: List<Product>) {
 
-        val diffCallback = SearchDiffCallback(this.data, data)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-        this.data.clear()
-        this.data.addAll(data)
-
-        diffResult.dispatchUpdatesTo(this)
+        differ.submitList(data)
 
     }
 
@@ -70,71 +79,72 @@ class SearchAdapter() :
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
 
-        if (isScrolling && !data[position].isLoaded ) {
-            Glide.with(holder.itemView.context).pauseRequests()
-        } else {
-            Glide.with(holder.itemView.context).resumeRequests()
-        }
-
-        data[position].images?.let {
-            Glide.with(holder.itemView.context)
-                .load(it[0])
-                .placeholder(R.drawable.mobile)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false;
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        data[position].isLoaded = true
-                        return false;
-                    }
-                })
-                .into(holder.classImg)
-        }
-
-        holder.descriptionLabel.text = data[position].name
-        holder.priceLabel.text = String.format(
-            holder.itemView.context.getString(R.string.amount),
-            data[position].rent_amount.toString()
-        )
-        val iv =
-            ((holder.itemView.context as SearchActivity).getWindowWidth() - holder.itemView.context.dp2px(
-                20
-            ) * 5) / 3
-        holder.classImg.layoutParams.width = iv
-        holder.classImg.layoutParams.height = iv
-
-
-        setItemClick?.let { itemClick ->
-            holder.itemView.setOnClickListener { itemClick.onClick(data[position].id) }
-        }
-
+       holder.bind(differ.currentList[position])
 
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return differ.currentList.size
     }
 
 
     inner class CardViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        var classImg: ImageView = itemView.findViewById(R.id.classImg)
-        var descriptionLabel: TextView = itemView.findViewById(R.id.descriptionLabel)
-        var priceLabel: TextView = itemView.findViewById(R.id.priceLabel)
 
+        fun bind(item:Product) = with(item){
+
+            if (isScrolling && !item.isLoaded) {
+                Glide.with(itemView.context).pauseRequests()
+            } else {
+                Glide.with(itemView.context).resumeRequests()
+            }
+
+            item.images?.let {
+                Glide.with(itemView.context)
+                    .load(it[0])
+                    .placeholder(R.drawable.mobile)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return false;
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            item.isLoaded = true
+                            return false;
+                        }
+                    })
+                    .into(itemView.classImg)
+            }
+
+            itemView.descriptionLabel.text = item.name
+            itemView.priceLabel.text = String.format(
+                itemView.context.getString(R.string.amount),
+                item.rent_amount.toString()
+            )
+            val iv =
+                ((itemView.context as SearchActivity).getWindowWidth() - itemView.context.dp2px(
+                    20
+                ) * 5) / 3
+            itemView.classImg.layoutParams.width = iv
+            itemView.classImg.layoutParams.height = iv
+
+
+            setItemClick?.let { itemClick ->
+                itemView.setOnClickListener { itemClick.onClick(item.id) }
+            }
+
+        }
 
     }
 
