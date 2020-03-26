@@ -97,7 +97,7 @@ class HomeAdapter(private val data: List<String>) :
 
         productList?.let {
 
-            holder.typeAdapter.setData(it)
+            holder.typeAdapter.submitList(it)
 
         }
 

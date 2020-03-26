@@ -165,6 +165,7 @@ class HomeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
 
     private fun initViewModel() {
+
         viewModel.onCommodity.observe(this, Observer { dto ->
             context?.let { context ->
                 when (dto.status) {

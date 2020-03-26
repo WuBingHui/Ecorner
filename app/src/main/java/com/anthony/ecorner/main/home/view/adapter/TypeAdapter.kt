@@ -5,30 +5,33 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ecorner.R
 import com.anthony.ecorner.dto.home.reponse.Product
 import com.anthony.ecorner.main.commodity.view.CommodityDetailActivity
-import com.anthony.ecorner.main.home.view.TypeDiffCallback
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.view_class_item.view.*
 
 class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
 
-    private var data = mutableListOf<Product>()
+   private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun setData(data: List<Product>) {
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem == newItem
+        }
 
-        val diffCallback = TypeDiffCallback(this.data, data)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
+    }
 
-        this.data.clear()
-        this.data.addAll(data)
+    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
+    fun submitList(data: List<Product>) {
 
-        diffResult.dispatchUpdatesTo(this)
+        differ.submitList(data)
 
     }
 
@@ -47,31 +50,16 @@ class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.bind()
-        val data = data[position]
-        data.images?.let {
-            Glide.with(holder.itemView.context)
-                .load(it[0])
-                .placeholder(R.drawable.mobile)
-                .into(holder.classImg)
-        }
-        holder.descriptionLabel.text = data.name
-        holder.priceLabel.text = String.format(
-            holder.itemView.context.getString(R.string.amount),
-            data.rent_amount.toString()
-        )
 
-        holder.itemView.tag = Pair(holder.itemView.context, data.id)
-
-        holder.itemView.setOnClickListener(itemViewListener)
+        holder.bind(differ.currentList[position])
 
     }
 
     private val itemViewListener = View.OnClickListener {
 
-        val pair = it.tag as Pair<Context,Int>
+        val pair = it.tag as Pair<Context, Int>
 
-        goCommodityDetailPage(pair.first,pair.second)
+        goCommodityDetailPage(pair.first, pair.second)
 
     }
 
@@ -85,23 +73,33 @@ class TypeAdapter() : RecyclerView.Adapter<TypeAdapter.CardViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return differ.currentList.size
     }
 
 
-    class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        lateinit var classImg: ImageView
+    inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        lateinit var descriptionLabel: TextView
-        lateinit var priceLabel: TextView
+        fun bind(item: Product) = with(itemView) {
 
+            item.images?.let {
+                Glide.with(itemView.context)
+                    .load(it[0])
+                    .placeholder(R.drawable.mobile)
+                    .into(itemView.classImg)
+            }
 
-        fun bind() {
-            classImg = itemView.findViewById(R.id.classImg)
+            itemView.descriptionLabel.text = item.name
+            itemView.priceLabel.text = String.format(
+                itemView.context.getString(R.string.amount),
+                item.rent_amount.toString()
+            )
 
-            descriptionLabel = itemView.findViewById(R.id.descriptionLabel)
-            priceLabel = itemView.findViewById(R.id.priceLabel)
+            itemView.tag = Pair(itemView.context, item.id)
+
+            itemView.setOnClickListener(itemViewListener)
+
         }
+
     }
 
 }

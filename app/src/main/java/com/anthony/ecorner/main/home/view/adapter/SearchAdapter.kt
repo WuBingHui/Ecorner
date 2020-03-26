@@ -1,8 +1,6 @@
 package com.anthony.ecorner.main.home.view.adapter
 
-import android.content.Context
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,6 @@ import com.anthony.ecorner.extension.dp2px
 import com.anthony.ecorner.extension.getWindowWidth
 import com.anthony.ecorner.main.home.view.SearchActivity
 import com.anthony.ecorner.main.home.view.SearchDiffCallback
-import com.anthony.ecorner.main.home.view.TypeDiffCallback
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
