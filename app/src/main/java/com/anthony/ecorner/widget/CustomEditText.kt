@@ -31,7 +31,7 @@ class CustomEditText constructor(context: Context, attrs: AttributeSet?) :
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomEditTextView)
 
-        hint = typedArray.getString(R.styleable.CustomEditTextView_hint)
+        hint = typedArray.getString(R.styleable.CustomEditTextView_android_hint)
 
         iconImage = typedArray.getDrawable(R.styleable.CustomEditTextView_icon)
 

@@ -4,9 +4,9 @@
 
 
     <declare-styleable name="CustomEditTextView">
-        <attr name="inputType"/>
+        <attr name="android:inputType"/>
         <attr name="title"/>
-        <attr name="hint"/>
+        <attr name="android:hint"/>
         <attr name="icon"/>
     </declare-styleable>
 
